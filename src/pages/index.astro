@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="HUGE Magazine">
+  <div class="hero" style="padding: 6rem 0; background: linear-gradient(135deg, var(--color-blue) 0%, var(--color-purple) 100%);">
+    <div class="container" style="text-align: center; color: white;">
+      <h1 style="font-size: 4.5rem; color: white; margin-bottom: 1.5rem;">
+        Where Innovation<br/>Meets Impact
+      </h1>
+      <p style="font-size: 1.5rem; max-width: 700px; margin: 0 auto; opacity: 0.95;">
+        Breakthrough ideas, emerging technologies, and the innovations shaping tomorrow. MIT Technology Review meets Wired.
+      </p>
+      <div style="margin-top: 3rem;">
+        <a href="/articles" style="display: inline-block; padding: 1rem 2.5rem; background: white; color: var(--color-purple); font-weight: 700; border-radius: 0.5rem; font-size: 1.1rem;">
+          Explore Articles
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <section style="padding: 6rem 0;">
+    <div class="container">
+      <h2 style="text-align: center; margin-bottom: 3rem;">Coming Soon</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem;">
+        <div>
+          <h3 style="color: var(--color-blue); margin-bottom: 1rem;">Breakthrough Technologies</h3>
+          <p style="color: var(--color-gray);">
+            Deep dives into the science and engineering behind transformative technologies.
+          </p>
+        </div>
+        <div>
+          <h3 style="color: var(--color-orange); margin-bottom: 1rem;">HUGE Ideas</h3>
+          <p style="color: var(--color-gray);">
+            Weekly spotlight on breakthrough concepts, companies, and people creating massive impact.
+          </p>
+        </div>
+        <div>
+          <h3 style="color: var(--color-purple); margin-bottom: 1rem;">Visionary Profiles</h3>
+          <p style="color: var(--color-gray);">
+            In-depth conversations with the people driving breakthrough thinking.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
