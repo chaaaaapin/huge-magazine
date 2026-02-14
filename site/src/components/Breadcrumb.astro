@@ -1,0 +1,106 @@
+---
+interface Props {
+  category: string;
+  title: string;
+}
+
+const { category, title } = Astro.props;
+
+// Get category path and name
+function getCategoryPath(cat: string): string {
+  return cat.toLowerCase() + 's';
+}
+
+function getCategoryName(cat: string): string {
+  const names: Record<string, string> = {
+    'Breakthrough': 'Breakthroughs',
+    'Article': 'Articles',
+    'Opinion': 'Opinions',
+    'Profile': 'Profiles',
+  };
+  return names[cat] || cat;
+}
+
+const categoryPath = getCategoryPath(category);
+const categoryName = getCategoryName(category);
+---
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="/" itemprop="item">
+        <span itemprop="name">Home</span>
+      </a>
+      <meta itemprop="position" content="1" />
+    </li>
+    <li class="separator">/</li>
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href={`/${categoryPath}/`} itemprop="item">
+        <span itemprop="name">{categoryName}</span>
+      </a>
+      <meta itemprop="position" content="2" />
+    </li>
+    <li class="separator">/</li>
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <span itemprop="name" class="current">{title}</span>
+      <meta itemprop="position" content="3" />
+    </li>
+  </ol>
+</nav>
+
+<style>
+  .breadcrumb {
+    padding: var(--space-md) 0;
+    background: rgba(0, 102, 255, 0.02);
+    border-bottom: 1px solid rgba(13, 13, 13, 0.05);
+  }
+
+  .breadcrumb ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-xs);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-width: var(--content-width);
+    margin: 0 auto;
+  }
+
+  .breadcrumb li {
+    margin: 0;
+  }
+
+  .breadcrumb a {
+    color: rgba(13, 13, 13, 0.6);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.2s ease;
+  }
+
+  .breadcrumb a:hover {
+    color: var(--color-electric-blue);
+  }
+
+  .separator {
+    color: rgba(13, 13, 13, 0.3);
+    font-size: 0.85rem;
+  }
+
+  .current {
+    color: var(--color-huge-black);
+    font-weight: 500;
+    font-size: 0.85rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 300px;
+    display: inline-block;
+  }
+
+  @media (max-width: 768px) {
+    .current {
+      max-width: 150px;
+    }
+  }
+</style>

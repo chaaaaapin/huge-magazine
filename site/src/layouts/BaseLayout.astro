@@ -1,0 +1,74 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  articleSchema?: any;
+}
+
+const { title, description, image, articleSchema } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const socialImage = image ? new URL(image, Astro.site).href : `${Astro.site}og-default.jpg`;
+
+const fullTitle = title === 'HUGE Magazine' ? title : `${title} | HUGE Magazine`;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="generator" content={Astro.generator}>
+
+  <!-- Primary Meta Tags -->
+  <title>{fullTitle}</title>
+  <meta name="title" content={fullTitle}>
+  <meta name="description" content={description}>
+  <link rel="canonical" href={canonicalURL}>
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content={canonicalURL}>
+  <meta property="og:title" content={fullTitle}>
+  <meta property="og:description" content={description}>
+  <meta property="og:image" content={socialImage}>
+  <meta property="og:site_name" content="HUGE Magazine">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content={canonicalURL}>
+  <meta property="twitter:title" content={fullTitle}>
+  <meta property="twitter:description" content={description}>
+  <meta property="twitter:image" content={socialImage}>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <!-- Sitemap -->
+  <link rel="sitemap" href="/sitemap-index.xml">
+
+  <!-- RSS Feed -->
+  <link rel="alternate" type="application/rss+xml" title="HUGE Magazine" href="/rss.xml">
+
+  <!-- JSON-LD Schema -->
+  {articleSchema && (
+    <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  )}
+
+  <!-- data.disco Analytics -->
+  <script is:inline>
+    (function() {
+      var script = document.createElement('script');
+      script.src = 'https://data.disco/track.js';
+      script.setAttribute('data-site', 'hugemagazine');
+      script.async = true;
+      document.head.appendChild(script);
+    })();
+  </script>
+</head>
+<body>
+  <slot />
+</body>
+</html>

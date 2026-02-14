@@ -1,0 +1,108 @@
+---
+const navItems = [
+  { href: '/breakthroughs', label: 'Breakthroughs' },
+  { href: '/articles', label: 'Articles' },
+  { href: '/opinions', label: 'Opinions' },
+  { href: '/profiles', label: 'Profiles' },
+  { href: '/about', label: 'About' },
+];
+---
+
+<header class="header">
+  <div class="container">
+    <nav class="nav">
+      <a href="/" class="logo">
+        <span class="logo-text">HUGE</span>
+        <span class="tagline">Where Innovation Meets Impact</span>
+      </a>
+
+      <ul class="nav-links">
+        {navItems.map((item) => (
+          <li><a href={item.href}>{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header {
+    background: var(--color-huge-white);
+    border-bottom: 1px solid rgba(13, 13, 13, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+    background: rgba(250, 250, 250, 0.95);
+  }
+
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-md) 0;
+  }
+
+  .logo {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+  }
+
+  .logo-text {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--color-huge-black);
+    line-height: 1;
+  }
+
+  .tagline {
+    font-size: 0.75rem;
+    color: rgba(13, 13, 13, 0.6);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-top: 0.25rem;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: var(--space-lg);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .nav-links a {
+    color: var(--color-huge-black);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+  }
+
+  .nav-links a:hover {
+    color: var(--color-electric-blue);
+  }
+
+  @media (max-width: 768px) {
+    .nav {
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .logo-text {
+      font-size: 2rem;
+    }
+
+    .nav-links {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--space-sm);
+    }
+
+    .nav-links a {
+      font-size: 0.9rem;
+    }
+  }
+</style>

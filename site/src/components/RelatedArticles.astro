@@ -1,0 +1,92 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import ArticleCard from './ArticleCard.astro';
+
+interface Props {
+  currentSlug: string;
+  category: string;
+  allArticles: (CollectionEntry<'articles'> | CollectionEntry<'breakthroughs'> | CollectionEntry<'opinions'> | CollectionEntry<'profiles'>)[];
+}
+
+const { currentSlug, category, allArticles } = Astro.props;
+
+// Get category path helper
+function getCategoryPath(cat: string): string {
+  return cat.toLowerCase() + 's';
+}
+
+// Filter related articles (same category, exclude current, max 3)
+const relatedArticles = allArticles
+  .filter(article =>
+    article.slug !== currentSlug &&
+    article.data.category === category
+  )
+  .slice(0, 3);
+
+// If not enough same-category articles, add from other categories
+if (relatedArticles.length < 3) {
+  const moreArticles = allArticles
+    .filter(article =>
+      article.slug !== currentSlug &&
+      article.data.category !== category &&
+      !relatedArticles.includes(article)
+    )
+    .slice(0, 3 - relatedArticles.length);
+
+  relatedArticles.push(...moreArticles);
+}
+---
+
+{relatedArticles.length > 0 && (
+  <section class="related-articles">
+    <div class="container">
+      <div class="content-width">
+        <h2 class="related-title">Related Articles</h2>
+        <div class="related-grid">
+          {relatedArticles.map((article) => (
+            <ArticleCard
+              title={article.data.title}
+              description={article.data.description}
+              pubDate={article.data.pubDate}
+              image={article.data.image}
+              href={`/${getCategoryPath(article.data.category)}/${article.slug}/`}
+              category={article.data.category}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .related-articles {
+    padding: var(--space-2xl) 0;
+    background: linear-gradient(180deg, transparent 0%, rgba(0, 102, 255, 0.02) 100%);
+    border-top: 1px solid rgba(13, 13, 13, 0.1);
+  }
+
+  .related-title {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: var(--space-xl);
+    color: var(--color-huge-black);
+    text-align: center;
+  }
+
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  @media (max-width: 768px) {
+    .related-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .related-title {
+      font-size: 1.5rem;
+    }
+  }
+</style>

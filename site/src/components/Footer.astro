@@ -1,0 +1,118 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3 class="footer-logo">HUGE</h3>
+        <p class="footer-tagline">Where Innovation Meets Impact</p>
+        <p class="footer-description">
+          Breakthrough ideas, emerging technologies, and the innovations shaping tomorrow.
+        </p>
+      </div>
+
+      <div class="footer-section">
+        <h4>Explore</h4>
+        <ul class="footer-links">
+          <li><a href="/breakthroughs">Breakthroughs</a></li>
+          <li><a href="/articles">Articles</a></li>
+          <li><a href="/opinions">Opinions</a></li>
+          <li><a href="/profiles">Profiles</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h4>Company</h4>
+        <ul class="footer-links">
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/rss.xml">RSS Feed</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; {currentYear} HUGE Magazine. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--color-huge-black);
+    color: var(--color-huge-white);
+    padding: var(--space-2xl) 0 var(--space-lg);
+    margin-top: var(--space-2xl);
+  }
+
+  .footer-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: var(--space-xl);
+    margin-bottom: var(--space-xl);
+  }
+
+  .footer-section h3 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: var(--space-xs);
+  }
+
+  .footer-section h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: var(--space-md);
+    color: var(--color-electric-blue);
+  }
+
+  .footer-tagline {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(250, 250, 250, 0.6);
+    margin-bottom: var(--space-md);
+  }
+
+  .footer-description {
+    color: rgba(250, 250, 250, 0.8);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer-links li {
+    margin-bottom: var(--space-xs);
+  }
+
+  .footer-links a {
+    color: rgba(250, 250, 250, 0.8);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .footer-links a:hover {
+    color: var(--color-electric-blue);
+  }
+
+  .footer-bottom {
+    padding-top: var(--space-lg);
+    border-top: 1px solid rgba(250, 250, 250, 0.1);
+    text-align: center;
+    color: rgba(250, 250, 250, 0.6);
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 768px) {
+    .footer-content {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+  }
+</style>

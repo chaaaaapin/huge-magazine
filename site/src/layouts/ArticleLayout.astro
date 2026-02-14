@@ -1,0 +1,205 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import RelatedArticles from '../components/RelatedArticles.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  article: CollectionEntry<'articles'> | CollectionEntry<'breakthroughs'> | CollectionEntry<'opinions'> | CollectionEntry<'profiles'>;
+}
+
+const { article } = Astro.props;
+const { title, description, pubDate, category, image } = article.data;
+const author = 'HUGE Editorial';
+
+// Get all articles for related articles section
+const allBreakthroughs = await getCollection('breakthroughs');
+const allArticles = await getCollection('articles');
+const allOpinions = await getCollection('opinions');
+const allProfiles = await getCollection('profiles');
+const allPosts = [...allBreakthroughs, ...allArticles, ...allOpinions, ...allProfiles];
+
+const formattedDate = pubDate.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+
+// JSON-LD Schema for articles
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description: description,
+  image: image ? new URL(image, Astro.site).href : undefined,
+  datePublished: pubDate.toISOString(),
+  author: {
+    '@type': 'Organization',
+    name: author
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'HUGE Magazine',
+    logo: {
+      '@type': 'ImageObject',
+      url: `${Astro.site}logo.png`
+    }
+  }
+};
+---
+
+<BaseLayout title={title} description={description} image={image} articleSchema={articleSchema}>
+  <Header />
+
+  <Breadcrumb category={category} title={title} />
+
+  <main class="article-main">
+    <article class="article">
+      <header class="article-header">
+        <div class="container">
+          <div class="content-width">
+            <span class="article-category">{category}</span>
+            <h1 class="article-title">{title}</h1>
+            <p class="article-description">{description}</p>
+            <div class="article-meta">
+              <span class="article-author">{author}</span>
+              <span class="separator">•</span>
+              <time datetime={pubDate.toISOString()}>{formattedDate}</time>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {image && (
+        <div class="article-hero">
+          <img src={image} alt={title} />
+        </div>
+      )}
+
+      <div class="article-content">
+        <div class="container">
+          <div class="content-width">
+            <slot />
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <RelatedArticles
+      currentSlug={article.slug}
+      category={category}
+      allArticles={allPosts}
+    />
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .article-main {
+    min-height: 80vh;
+  }
+
+  .article-header {
+    padding: var(--space-2xl) 0 var(--space-xl);
+    background: linear-gradient(180deg, rgba(0, 102, 255, 0.02) 0%, transparent 100%);
+  }
+
+  .article-category {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-electric-blue);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: var(--space-sm);
+  }
+
+  .article-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: var(--space-md);
+    color: var(--color-huge-black);
+  }
+
+  .article-description {
+    font-size: 1.35rem;
+    line-height: 1.5;
+    color: rgba(13, 13, 13, 0.7);
+    margin-bottom: var(--space-lg);
+  }
+
+  .article-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: 0.95rem;
+    color: rgba(13, 13, 13, 0.6);
+  }
+
+  .article-author {
+    font-weight: 500;
+  }
+
+  .separator {
+    color: rgba(13, 13, 13, 0.3);
+  }
+
+  .article-hero {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .article-hero img {
+    width: 100%;
+    max-height: 600px;
+    object-fit: cover;
+  }
+
+  .article-content {
+    padding: var(--space-xl) 0 var(--space-2xl);
+  }
+
+  /* Article content typography */
+  .article-content :global(h2) {
+    margin-top: var(--space-xl);
+    margin-bottom: var(--space-md);
+  }
+
+  .article-content :global(h3) {
+    margin-top: var(--space-lg);
+    margin-bottom: var(--space-sm);
+  }
+
+  .article-content :global(p) {
+    margin-bottom: var(--space-md);
+  }
+
+  .article-content :global(ul),
+  .article-content :global(ol) {
+    margin-bottom: var(--space-lg);
+  }
+
+  .article-content :global(blockquote) {
+    font-size: 1.25rem;
+    margin: var(--space-xl) 0;
+  }
+
+  @media (max-width: 768px) {
+    .article-title {
+      font-size: 2rem;
+    }
+
+    .article-description {
+      font-size: 1.1rem;
+    }
+
+    .article-hero img {
+      max-height: 400px;
+    }
+  }
+</style>

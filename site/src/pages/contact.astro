@@ -1,0 +1,221 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout
+  title="Contact HUGE Magazine"
+  description="Get in touch with HUGE Magazine. Story ideas, questions, or contributions welcome."
+>
+  <Header />
+
+  <main class="contact-main">
+    <div class="container">
+      <div class="content-width">
+        <h1>Contact Us</h1>
+
+        <p class="lead">
+          Have a story idea? Want to contribute? Questions about HUGE Magazine?
+          We'd love to hear from you.
+        </p>
+
+        <div class="contact-options">
+          <div class="contact-option">
+            <h3>Editorial</h3>
+            <p>Story pitches, article ideas, corrections</p>
+            <a href="mailto:editorial@hugemagazine.com" class="contact-link">
+              editorial@hugemagazine.com
+            </a>
+          </div>
+
+          <div class="contact-option">
+            <h3>General Inquiries</h3>
+            <p>General questions, feedback, partnerships</p>
+            <a href="mailto:hello@hugemagazine.com" class="contact-link">
+              hello@hugemagazine.com
+            </a>
+          </div>
+
+          <div class="contact-option">
+            <h3>Submissions</h3>
+            <p>Want to write for HUGE Magazine?</p>
+            <p>
+              We're always looking for fresh voices with deep expertise and original perspectives.
+              Send us your pitch (300-500 words) with 2-3 writing samples.
+            </p>
+            <a href="mailto:submissions@hugemagazine.com" class="contact-link">
+              submissions@hugemagazine.com
+            </a>
+          </div>
+        </div>
+
+        <div class="guidelines">
+          <h2>Pitch Guidelines</h2>
+          <p>If you're pitching a story idea, please include:</p>
+          <ul>
+            <li><strong>Headline:</strong> What's the story called?</li>
+            <li><strong>Why now:</strong> Why is this timely?</li>
+            <li><strong>Why HUGE:</strong> Why is this a fit for our audience?</li>
+            <li><strong>Your angle:</strong> What's your unique take?</li>
+            <li><strong>Your expertise:</strong> Why are you the right person to write this?</li>
+          </ul>
+          <p>
+            We typically respond within 5-7 business days. If you don't hear back, feel free
+            to follow up once after two weeks.
+          </p>
+        </div>
+
+        <div class="newsletter-prompt">
+          <h2>Stay Connected</h2>
+          <p>
+            Get breakthrough ideas delivered weekly. No spam, just innovation.
+          </p>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Enter your email" required />
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .contact-main {
+    padding: var(--space-2xl) 0;
+    min-height: 80vh;
+  }
+
+  .lead {
+    font-size: 1.35rem;
+    line-height: 1.6;
+    color: rgba(13, 13, 13, 0.8);
+    margin-bottom: var(--space-xl);
+  }
+
+  h1 {
+    margin-bottom: var(--space-lg);
+  }
+
+  h2 {
+    margin-top: var(--space-xl);
+    margin-bottom: var(--space-md);
+    color: var(--color-electric-blue);
+  }
+
+  .contact-options {
+    display: grid;
+    gap: var(--space-lg);
+    margin: var(--space-xl) 0;
+  }
+
+  .contact-option {
+    padding: var(--space-lg);
+    border: 1px solid rgba(13, 13, 13, 0.1);
+    border-radius: 8px;
+    background: rgba(0, 102, 255, 0.02);
+  }
+
+  .contact-option h3 {
+    color: var(--color-huge-black);
+    margin-bottom: var(--space-xs);
+  }
+
+  .contact-option p {
+    color: rgba(13, 13, 13, 0.7);
+    margin-bottom: var(--space-sm);
+  }
+
+  .contact-link {
+    display: inline-block;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-electric-blue);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+
+  .contact-link:hover {
+    border-color: var(--color-electric-blue);
+  }
+
+  .guidelines {
+    margin: var(--space-xl) 0;
+    padding: var(--space-lg);
+    background: rgba(91, 33, 182, 0.03);
+    border-radius: 8px;
+  }
+
+  .newsletter-prompt {
+    margin: var(--space-2xl) 0;
+    padding: var(--space-xl);
+    background: var(--color-huge-black);
+    color: var(--color-huge-white);
+    border-radius: 12px;
+    text-align: center;
+  }
+
+  .newsletter-prompt h2 {
+    color: var(--color-huge-white);
+    margin-top: 0;
+  }
+
+  .newsletter-prompt p {
+    font-size: 1.15rem;
+    color: rgba(250, 250, 250, 0.8);
+    margin-bottom: var(--space-lg);
+  }
+
+  .newsletter-form {
+    display: flex;
+    gap: var(--space-sm);
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .newsletter-form input {
+    flex: 1;
+    padding: var(--space-sm) var(--space-md);
+    border: 2px solid rgba(250, 250, 250, 0.2);
+    background: rgba(250, 250, 250, 0.05);
+    color: var(--color-huge-white);
+    font-size: 1rem;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+
+  .newsletter-form input:focus {
+    border-color: var(--color-electric-blue);
+  }
+
+  .newsletter-form input::placeholder {
+    color: rgba(250, 250, 250, 0.5);
+  }
+
+  .newsletter-form button {
+    padding: var(--space-sm) var(--space-lg);
+    background: var(--color-electric-blue);
+    color: var(--color-huge-white);
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+
+  .newsletter-form button:hover {
+    background: var(--color-innovation-orange);
+  }
+
+  @media (max-width: 768px) {
+    .newsletter-form {
+      flex-direction: column;
+    }
+  }
+</style>

@@ -1,0 +1,153 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout
+  title="About HUGE Magazine"
+  description="We exist for one reason: to make complex, world-changing ideas accessible and exciting for the people who need to understand them."
+>
+  <Header />
+
+  <main class="about-main">
+    <div class="container">
+      <div class="content-width">
+        <h1>About HUGE Magazine</h1>
+
+        <p class="lead">
+          HUGE Magazine is the definitive destination for breakthrough ideas, emerging technologies,
+          and the innovations shaping tomorrow. We cover what's next before it's mainstream, with the
+          editorial rigor of MIT Technology Review and the visual audacity of Wired.
+        </p>
+
+        <h2>What We Are</h2>
+        <ul>
+          <li>A magazine about <strong>ideas</strong>, not products</li>
+          <li>A publication that assumes reader sophistication without requiring expertise</li>
+          <li>A visual experience where design is co-equal with writing</li>
+          <li>An authority that takes positions, not a stenographer of competing views</li>
+        </ul>
+
+        <h2>What We're Not</h2>
+        <ul>
+          <li>A tech news aggregator</li>
+          <li>A gadget review site</li>
+          <li>A startup cheerleader</li>
+          <li>An AI hype machine</li>
+        </ul>
+
+        <h2>Our Mission</h2>
+        <p>
+          We exist for one reason: <strong>to make complex, world-changing ideas accessible and
+          exciting for the people who need to understand them.</strong>
+        </p>
+
+        <p>
+          Whether you're a tech executive, innovation manager, researcher, or intellectually curious
+          professional in any field, HUGE Magazine helps you understand where the world is going —
+          not just what's trending today.
+        </p>
+
+        <h2>Editorial Philosophy</h2>
+        <p>
+          We sound like a brilliant friend who happens to work in tech — someone who can explain
+          quantum computing over dinner without being condescending, and who has strong opinions
+          about what it means for the world.
+        </p>
+
+        <p>We are:</p>
+        <ul>
+          <li><strong>Confident, not arrogant</strong> — We take positions. We make calls. We don't hedge everything.</li>
+          <li><strong>Accessible, not dumbed-down</strong> — We explain complex ideas clearly without patronizing.</li>
+          <li><strong>Opinionated, not preachy</strong> — We have a point of view. We don't lecture.</li>
+          <li><strong>Curious, not credulous</strong> — We're excited about innovation but skeptical of hype.</li>
+          <li><strong>Visual, not decorative</strong> — Design serves storytelling. Every image earns its place.</li>
+        </ul>
+
+        <h2>What We Cover</h2>
+        <div class="pillars">
+          <div class="pillar">
+            <h3>Breakthrough Technologies</h3>
+            <p>Deep dives into AI/ML, quantum computing, biotech, clean energy, materials science, and more.</p>
+          </div>
+          <div class="pillar">
+            <h3>HUGE Ideas</h3>
+            <p>Weekly spotlight on breakthrough concepts, companies, or people creating massive impact.</p>
+          </div>
+          <div class="pillar">
+            <h3>Innovation Case Studies</h3>
+            <p>How breakthroughs actually happen — the messy, nonlinear reality of turning ideas into impact.</p>
+          </div>
+          <div class="pillar">
+            <h3>Visionary Profiles</h3>
+            <p>In-depth conversations with the people driving breakthrough thinking.</p>
+          </div>
+          <div class="pillar">
+            <h3>Future Dispatches</h3>
+            <p>Sharp, provocative takes on technology's intersection with society, policy, and culture.</p>
+          </div>
+        </div>
+
+        <h2>Contact</h2>
+        <p>
+          Questions? Story ideas? Want to contribute?<br>
+          <a href="/contact">Get in touch</a>
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .about-main {
+    padding: var(--space-2xl) 0;
+    min-height: 80vh;
+  }
+
+  .lead {
+    font-size: 1.35rem;
+    line-height: 1.6;
+    color: rgba(13, 13, 13, 0.8);
+    margin-bottom: var(--space-xl);
+  }
+
+  h1 {
+    margin-bottom: var(--space-lg);
+  }
+
+  h2 {
+    margin-top: var(--space-xl);
+    margin-bottom: var(--space-md);
+    color: var(--color-electric-blue);
+  }
+
+  h3 {
+    margin-bottom: var(--space-sm);
+  }
+
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-lg);
+    margin: var(--space-xl) 0;
+  }
+
+  .pillar {
+    padding: var(--space-md);
+    border: 1px solid rgba(13, 13, 13, 0.1);
+    border-radius: 8px;
+    background: rgba(0, 102, 255, 0.02);
+  }
+
+  .pillar h3 {
+    color: var(--color-huge-black);
+  }
+
+  .pillar p {
+    margin-bottom: 0;
+    color: rgba(13, 13, 13, 0.7);
+  }
+</style>
