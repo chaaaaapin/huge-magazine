@@ -11,9 +11,9 @@ from datetime import datetime, timedelta
 import random
 import json
 
-# API Keys
-ANTHROPIC_API_KEY = "REDACTED_ANTHROPIC_KEY"
-PEXELS_API_KEY = "REDACTED_PEXELS_KEY"
+# API Keys (loaded from environment)
+ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
+PEXELS_API_KEY = os.environ.get("PEXELS_API_KEY", "")
 
 # Article specs
 ARTICLE_SPECS = [
