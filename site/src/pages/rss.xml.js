@@ -12,7 +12,7 @@ export async function GET(context) {
 
   return rss({
     title: 'HUGE Magazine',
-    description: 'Daily startup features, powered by Product Hunt. We write features, not press releases.',
+    description: 'Daily startup features. We write analysis, not press releases.',
     site: context.site,
     items: features.map(f => ({
       title: f.data.title,

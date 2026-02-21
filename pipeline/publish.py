@@ -382,6 +382,50 @@ funding, and anything about founders not confirmed in the research.
 """
 
 
+def find_related_articles(post: dict, max_links: int = 4) -> list[dict]:
+    """Scan existing MDX files to find articles with overlapping topics for internal linking."""
+    post_topics = {
+        e["node"]["name"].lower()
+        for e in post.get("topics", {}).get("edges", [])
+    }
+    current_slug = post.get("slug", "")
+    related = []
+
+    for mdx_file in sorted(CONTENT_DIR.glob("*.mdx"), reverse=True):
+        try:
+            text = mdx_file.read_text()
+            parts = text.split("---", 2)
+            if len(parts) < 3:
+                continue
+            fm = parts[1]
+
+            # Extract fields
+            ph_slug_m = re.search(r'^ph_slug:\s*"([^"]*)"', fm, re.MULTILINE)
+            title_m = re.search(r'^title:\s*"([^"]*)"', fm, re.MULTILINE)
+            topics_m = re.findall(r'^\s+- "([^"]*)"', fm, re.MULTILINE)
+
+            ph_slug = ph_slug_m.group(1) if ph_slug_m else ""
+            title = title_m.group(1) if title_m else ""
+            file_topics = {t.lower() for t in topics_m}
+
+            if ph_slug == current_slug:
+                continue  # skip self
+
+            overlap = post_topics & file_topics
+            if overlap:
+                related.append({
+                    "slug": ph_slug,
+                    "title": title,
+                    "overlap": len(overlap),
+                    "shared_topics": sorted(overlap),
+                })
+        except Exception:
+            continue
+
+    related.sort(key=lambda x: x["overlap"], reverse=True)
+    return related[:max_links]
+
+
 def build_article_prompt(post: dict, product_url: str, research: dict, author: dict) -> str:
     topics = [e["node"]["name"] for e in post.get("topics", {}).get("edges", [])]
     makers = post.get("makers", [])
@@ -398,7 +442,24 @@ def build_article_prompt(post: dict, product_url: str, research: dict, author: d
 
     site_snippet = research["site_content"][:2000] if research["site_content"] else "(not available)"
 
-    return f"""You are writing a feature article for HUGE Magazine about a Product Hunt launch.
+    # Find related articles for internal linking
+    related_articles = find_related_articles(post)
+    if related_articles:
+        internal_links_block = "\n".join(
+            f"  - [{r['title']}](/feature/{r['slug']}) — shared topics: {', '.join(r['shared_topics'])}"
+            for r in related_articles
+        )
+        internal_links_section = f"""
+INTERNAL LINKING OPPORTUNITY:
+These existing HUGE Magazine articles cover overlapping topics. Where it flows naturally in your
+writing (not forced), link to 2-3 of them using their markdown URL. Embed the link in a relevant
+sentence — not as a list, not as "see also", just naturally woven in.
+{internal_links_block}
+"""
+    else:
+        internal_links_section = ""
+
+    return f"""You are writing a feature article for HUGE Magazine about a startup launch.
 
 WRITER ASSIGNED: {author['name']}
 WRITER VOICE NOTES: {author['voice']}
@@ -430,7 +491,7 @@ MARKET CONTEXT RESEARCH:
 
 COMPETITORS / ALTERNATIVES RESEARCH:
 {format_search_results(research['competitor_results'])}
-
+{internal_links_section}
 ---
 
 ARTICLE REQUIREMENTS:

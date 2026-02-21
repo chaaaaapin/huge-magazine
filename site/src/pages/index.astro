@@ -9,7 +9,7 @@ import { topicCategorySlug } from '../lib/topicMap';
 
 const allFeatures = await getCollection('features');
 
-// Sort by date DESC, then ph_rank ASC within a date
+// Sort by date DESC, then rank ASC within a date
 allFeatures.sort((a, b) => {
   if (b.data.date !== a.data.date) return b.data.date.localeCompare(a.data.date);
   return a.data.ph_rank - b.data.ph_rank;
@@ -25,7 +25,7 @@ const grid4 = recentFeatures.slice(9, 12);  // 3-up row
 const grid5 = recentFeatures.slice(12, 14); // 2-up row
 const grid6 = recentFeatures.slice(14, 18); // 4-up row (small)
 
-// Most popular: all features sorted by ph_votes DESC, top 8
+// Most popular: sorted by vote traction DESC, top 8
 const mostPopular = [...allFeatures]
   .sort((a, b) => b.data.ph_votes - a.data.ph_votes)
   .slice(0, 8);
