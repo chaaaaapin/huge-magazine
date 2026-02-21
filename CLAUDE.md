@@ -54,7 +54,7 @@ Build and operate an autonomous tech/business magazine that:
 | Pexels | `REDACTED_PEXELS_KEY` | Stock photos (free) |
 | Cloudflare | `ujcZ_Z4O44iANw0o7JuogumkbYUDccj5-fYVITus` | Pages deployment |
 | data.disco | Username: `io2`, Password: `io2-save-print-hamburger` | Analytics |
-| Slack | `https://hooks.zapier.com/hooks/catch/23735911/uqel68j/` | Notifications |
+| Slack | `` | Notifications |
 
 ---
 

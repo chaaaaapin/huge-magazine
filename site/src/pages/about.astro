@@ -2,98 +2,109 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "NewsMediaOrganization",
+  "name": "HUGE Magazine",
+  "url": "https://hugemagazine.com",
+  "logo": "https://hugemagazine.com/favicon.ico",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "email": "team@hugemagazine.com",
+    "contactType": "editorial"
+  },
+  "sameAs": ["https://hugemagazine.com"]
+};
+
+const authors = [
+  {
+    slug: 'sarah-munroe',
+    name: 'Sarah Munroe',
+    title: 'Staff Writer',
+    bio: "Sarah has been writing about technology since before it was cool to do so, and will continue doing so long after everyone else has moved on to whatever comes next. She covers AI, productivity tools, and enterprise software with a clinical precision that occasionally cracks into something warmer. Her most-used mobile app in 2025 was Claude — which she will tell you is a tool, not a personality trait, though the line is increasingly blurry.",
+  },
+  {
+    slug: 'jess-tran',
+    name: 'Jess Tran',
+    title: 'Staff Writer',
+    bio: "Jess came up in software engineering before deciding that writing about software was more fun than building it (and easier to explain at family dinners). She is extremely online in the way that people who grew up on forums are — which is to say, she has opinions about things that happened on the internet in 2011 and is not sorry about any of them. Covers developer tools, open source, and whatever weird product caught her eye this week. Her most-used mobile app in 2025 was Reddit, which tracks.",
+  },
+  {
+    slug: 'danny-kowalski',
+    name: 'Danny Kowalski',
+    title: 'Staff Writer',
+    bio: "Danny works in product somewhere and has done so at several companies you may or may not have heard of. He writes about startups the way a sports fan watches games: with investment, skepticism, and a running commentary nobody asked for. His verdicts are the most likely to age poorly, and he knows it. His most-used mobile app in 2025 was Bonk, which he refuses to explain.",
+  },
+];
 ---
 
 <BaseLayout
-  title="About HUGE Magazine"
-  description="We exist for one reason: to make complex, world-changing ideas accessible and exciting for the people who need to understand them."
+  title="What is HUGE?"
+  description="HUGE Magazine covers the most interesting new startups launching every day — from Product Hunt, Hacker News, Reddit, and everywhere else interesting things tend to surface first. We write features, not press releases."
 >
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </Fragment>
+
   <Header />
 
   <main class="about-main">
     <div class="container">
-      <div class="content-width">
-        <h1>About HUGE Magazine</h1>
+      <div class="about-body">
 
-        <p class="lead">
-          HUGE Magazine is the definitive destination for breakthrough ideas, emerging technologies,
-          and the innovations shaping tomorrow. We cover what's next before it's mainstream, with the
-          editorial rigor of MIT Technology Review and the visual audacity of Wired.
+        <h1 class="about-title">What is HUGE?</h1>
+
+        <p class="about-lead">
+          We are a team of nerds who watch all of the major forums, message boards, subreddits, and corners of the internet where new products surface — Product Hunt, Hacker News, Reddit, indie maker communities, launch Discord servers, and anywhere else interesting things tend to appear first. Every day we look at what's launching, what's getting traction, and what's actually worth talking about.
         </p>
 
-        <h2>What We Are</h2>
-        <ul>
-          <li>A magazine about <strong>ideas</strong>, not products</li>
-          <li>A publication that assumes reader sophistication without requiring expertise</li>
-          <li>A visual experience where design is co-equal with writing</li>
-          <li>An authority that takes positions, not a stenographer of competing views</li>
-        </ul>
-
-        <h2>What We're Not</h2>
-        <ul>
-          <li>A tech news aggregator</li>
-          <li>A gadget review site</li>
-          <li>A startup cheerleader</li>
-          <li>An AI hype machine</li>
-        </ul>
-
-        <h2>Our Mission</h2>
-        <p>
-          We exist for one reason: <strong>to make complex, world-changing ideas accessible and
-          exciting for the people who need to understand them.</strong>
+        <p class="about-para">
+          The internet generates a lot of product launches. Most of them are not interesting. A small number of them are genuinely novel, well-timed, or solving a problem that a lot of people have and haven't articulated yet. We try to find those and write about them before they become obvious — which means sometimes we're early and sometimes we're wrong, and we're fine with both of those outcomes.
         </p>
 
-        <p>
-          Whether you're a tech executive, innovation manager, researcher, or intellectually curious
-          professional in any field, HUGE Magazine helps you understand where the world is going —
-          not just what's trending today.
+        <h2 class="about-section">What we actually do</h2>
+
+        <p class="about-para">
+          We write features, not press releases. The goal is to give a real take on what a product is, why it exists, who built it, and whether it matters — not just to repeat the founder's launch copy back at you. Every piece has three sections: the macro context (what's happening in the space), the micro detail (what this specific product actually does), and a verdict (what we actually think). The verdict is the part that's most likely to age badly, which is part of why we write it.
         </p>
 
-        <h2>Editorial Philosophy</h2>
-        <p>
-          We sound like a brilliant friend who happens to work in tech — someone who can explain
-          quantum computing over dinner without being condescending, and who has strong opinions
-          about what it means for the world.
+        <h2 class="about-section">We are not paid for placements</h2>
+
+        <p class="about-para">
+          We are emphatically, aggressively not paid for placements. No affiliate deals. No sponsored content. No "featured" listings, no "premium partner" tiers, no quiet arrangements where a founder sends us something nice and then we happen to be very enthusiastic about their launch. This is a hobby site run by people who find this stuff genuinely interesting. If we write about your product, it's because we wanted to.
         </p>
 
-        <p>We are:</p>
-        <ul>
-          <li><strong>Confident, not arrogant</strong> — We take positions. We make calls. We don't hedge everything.</li>
-          <li><strong>Accessible, not dumbed-down</strong> — We explain complex ideas clearly without patronizing.</li>
-          <li><strong>Opinionated, not preachy</strong> — We have a point of view. We don't lecture.</li>
-          <li><strong>Curious, not credulous</strong> — We're excited about innovation but skeptical of hype.</li>
-          <li><strong>Visual, not decorative</strong> — Design serves storytelling. Every image earns its place.</li>
-        </ul>
+        <h2 class="about-section">The kind of people we are</h2>
 
-        <h2>What We Cover</h2>
-        <div class="pillars">
-          <div class="pillar">
-            <h3>Breakthrough Technologies</h3>
-            <p>Deep dives into AI/ML, quantum computing, biotech, clean energy, materials science, and more.</p>
-          </div>
-          <div class="pillar">
-            <h3>HUGE Ideas</h3>
-            <p>Weekly spotlight on breakthrough concepts, companies, or people creating massive impact.</p>
-          </div>
-          <div class="pillar">
-            <h3>Innovation Case Studies</h3>
-            <p>How breakthroughs actually happen — the messy, nonlinear reality of turning ideas into impact.</p>
-          </div>
-          <div class="pillar">
-            <h3>Visionary Profiles</h3>
-            <p>In-depth conversations with the people driving breakthrough thinking.</p>
-          </div>
-          <div class="pillar">
-            <h3>Future Dispatches</h3>
-            <p>Sharp, provocative takes on technology's intersection with society, policy, and culture.</p>
-          </div>
+        <p class="about-para">
+          We'd describe ourselves as the kind of people who still have open tabs from three weeks ago about something they read on Hacker News. We think software is fascinating, startups are frequently absurd, and the gap between what a product claims to do and what it actually does is one of the most interesting things to write about. We are not trying to be neutral — we have opinions — but we try to be fair, and we try to be specific about what we actually know versus what we're guessing.
+        </p>
+
+        <hr class="divider" style="margin-top: 3rem;" />
+
+        <h2 class="about-section">The team</h2>
+
+        <div class="team-list">
+          {authors.map(author => (
+            <div class="team-member">
+              <div class="team-member-header">
+                <a href={`/author/${author.slug}`} class="team-member-name">{author.name}</a>
+                <span class="team-member-title">{author.title}</span>
+              </div>
+              <p class="team-member-bio">{author.bio}</p>
+            </div>
+          ))}
         </div>
 
-        <h2>Contact</h2>
-        <p>
-          Questions? Story ideas? Want to contribute?<br>
-          <a href="/contact">Get in touch</a>
-        </p>
+        <hr class="divider" style="margin-top: 3rem;" />
+
+        <div class="about-links">
+          <a href="/" class="btn-link">← Today's edition</a>
+          <a href="mailto:team@hugemagazine.com" class="btn-link">team@hugemagazine.com ↗</a>
+          <a href="/rss.xml" class="btn-link">RSS feed ↗</a>
+        </div>
+
       </div>
     </div>
   </main>
@@ -103,51 +114,98 @@ import Footer from '../components/Footer.astro';
 
 <style>
   .about-main {
-    padding: var(--space-2xl) 0;
-    min-height: 80vh;
+    padding: 4rem 0 6rem;
+    min-height: 70vh;
   }
 
-  .lead {
-    font-size: 1.35rem;
-    line-height: 1.6;
-    color: rgba(13, 13, 13, 0.8);
-    margin-bottom: var(--space-xl);
+  .about-body {
+    max-width: 680px;
   }
 
-  h1 {
-    margin-bottom: var(--space-lg);
+  .about-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 1.75rem;
+    color: var(--text-primary);
   }
 
-  h2 {
-    margin-top: var(--space-xl);
-    margin-bottom: var(--space-md);
-    color: var(--color-electric-blue);
+  .about-lead {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: var(--text-primary);
+    margin-bottom: 1.25rem;
   }
 
-  h3 {
-    margin-bottom: var(--space-sm);
+  .about-section {
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+    margin-top: 2.25rem;
+    margin-bottom: 0.75rem;
   }
 
-  .pillars {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--space-lg);
-    margin: var(--space-xl) 0;
-  }
-
-  .pillar {
-    padding: var(--space-md);
-    border: 1px solid rgba(13, 13, 13, 0.1);
-    border-radius: 8px;
-    background: rgba(0, 102, 255, 0.02);
-  }
-
-  .pillar h3 {
-    color: var(--color-huge-black);
-  }
-
-  .pillar p {
+  .about-para {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
     margin-bottom: 0;
-    color: rgba(13, 13, 13, 0.7);
+  }
+
+  /* ── Team ── */
+  .team-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 1.5rem;
+  }
+
+  .team-member {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .team-member-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .team-member-name {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .team-member-name:hover {
+    color: var(--accent);
+  }
+
+  .team-member-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .team-member-bio {
+    font-size: 0.93rem;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  .about-links {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
   }
 </style>

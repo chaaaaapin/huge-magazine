@@ -23,34 +23,40 @@ app_type: "WebApplication"
 
 ## The Macro: The IDE Was Never the End Goal
 
-Here's the thing about the AI coding assistant market: it got very cozy, very fast, inside the IDE. Copilot autocompletes your thoughts. Cursor rewrites your files. Codeium suggests things politely. They all live in the same comfortable box — a GUI, a text editor, a human hovering over a keyboard. Which, look, that's fine. Useful, even. But it's also kind of a local maximum.
+The AI coding assistant market got comfortable very fast, and it got comfortable in the same place: inside the IDE. Copilot autocompletes your thoughts. Cursor rewrites your files. Codeium suggests things politely. They all live in the same box. A GUI, a text editor, a human hovering over a keyboard. Useful, fine, but also kind of a local maximum.
 
-The more interesting question — the one that actually matters at scale — is what happens when you remove the human from the loop entirely. Not for everything. But for the repeatable, automatable, grunt-work stuff: dependency audits, diff reviews, pre-commit checks, nightly code quality scans. Nobody wants to babysit that. Nobody should have to.
+The more interesting question is what happens when you remove the human from the loop entirely. Not for everything. For the repeatable, automatable grunt work: dependency audits, diff reviews, pre-commit checks, nightly code quality scans. Nobody wants to babysit that. Nobody should have to.
 
-Terminal-first AI agents are the logical next step, and the space is starting to fill up. Anthropic's Claude has shell tooling. OpenAI's operator-style agents are creeping toward CI. Smaller players like Aider have been doing terminal-based AI coding for a while now — Aider's been quietly respectable in this lane. And GitHub Actions itself is increasingly a platform for AI-assisted automation, which means every serious tool in this category has to have a credible CI/CD story or it doesn't have a story at all.
+Terminal-first AI agents are the logical next step.
 
-The market tailwinds are real, though the specific numbers vary depending on which research firm you believe. Estimates for open source services market size in 2025 range from around $18 billion to nearly $40 billion across different sources, with CAGRs in the 15–17% range projected through the early 2030s. The variance is wide enough that you should treat those figures as directionally true rather than precisely true. The direction is: up, and fast.
+The space is starting to fill up. Anthropic's Claude has shell tooling. OpenAI's operator-style agents are creeping toward CI. Aider has been doing terminal-based AI coding for a while now and has been quietly respectable in that lane. GitHub Actions is increasingly a platform for AI-assisted automation, which means every serious tool in this category needs a credible CI/CD story. No story there, no story at all.
+
+Market estimates for open source services in 2025 range from around $18 billion to nearly $40 billion depending on which research firm you ask, with CAGRs in the 15-17% range projected through the early 2030s. The variance is wide enough that you should treat those figures as directionally true rather than precisely true. The direction is up, and fast.
 
 The question isn't whether terminal agents are coming. It's who builds the one developers actually trust enough to let run unsupervised.
 
 ## The Micro: npm install and Let It Cook
 
-Cline CLI 2.0 is an open-source AI coding agent that runs in your terminal — not as a wrapper around your IDE, but as a first-class CLI tool. One `npm install -g cline` and you're in. Node.js 18+ required, which is a reasonable ask in 2025.
+Cline CLI 2.0 is an open-source AI coding agent that runs in your terminal. Not as a wrapper around your IDE. A first-class CLI tool. One `npm install -g cline` and you're in, with Node.js 18+ required, which is a reasonable ask in 2025.
 
-The headline features are three: parallel agents, headless mode, and ACP support. Parallel agents means you can run multiple Cline processes simultaneously — different folders, different branches, different concerns — and orchestrate them with whatever shell tooling you already use (tmux, CI runners, your own scripts). This is genuinely useful if you've ever tried to coordinate multi-repo work and ended up manually babysitting five terminal windows.
+Three headline features: parallel agents, headless mode, and ACP support.
 
-Headless mode is the CI/CD pitch, and it's the most interesting one technically. The `-y` flag strips out the interactive UI entirely, letting you pipe content in and get structured output back. The product site shows a CI snippet that's actually readable: `git diff origin/main | cline -y "Review this diff. Flag bugs, security issues, and style violations."` That's not marketing copy — that's a thing you could paste into a GitHub Actions YAML right now and have it do something real. Whether it does something *good* is a different question, but the plumbing is there.
+Parallel agents means you can run multiple Cline processes simultaneously across different folders, different branches, different concerns, and orchestrate them with whatever shell tooling you already use. tmux, CI runners, your own scripts. This is genuinely useful if you've ever tried to coordinate multi-repo work and ended up manually babysitting five terminal windows. Most people have.
 
-ACP — Agent Client Protocol — is the third piece, and it's the most forward-looking. The `--acp` flag lets Cline act as an agent that any ACP-compatible editor (Zed and Neovim are cited specifically) can connect to. This is Cline hedging against IDE lock-in while also making a bet that ACP becomes a real standard. That's either smart positioning or wishful thinking, depending on how protocol adoption goes.
+Headless mode is the CI/CD pitch, and it's the most interesting one technically. The `-y` flag strips out the interactive UI entirely, letting you pipe content in and get structured output back. The product site shows a CI snippet that's actually readable: `git diff origin/main | cline -y "Review this diff. Flag bugs, security issues, and style violations."` That's not marketing copy. That's something you could paste into a GitHub Actions YAML right now and have it do something real. Whether it does something *good* is a separate question, but the plumbing is there.
 
-The launch pulled 300 upvotes and ranked #2 for the day on Product Hunt, with only 6 comments — which suggests broad awareness but not yet the kind of deep community engagement you'd want to see for a developer tool. The 5M+ developer claim appears consistently across their own materials and LinkedIn posts, though independent verification isn't available.
+ACP, Agent Client Protocol, is the third piece and the most forward-looking. The `--acp` flag lets Cline act as an agent that any ACP-compatible editor can connect to. Zed and Neovim are cited specifically. This is Cline hedging against IDE lock-in while also making a bet that ACP becomes a real standard. That's either smart positioning or wishful thinking, depending on how protocol adoption goes.
+
+It got solid traction on launch day on Product Hunt. The 5M+ developer claim appears consistently across their own materials and LinkedIn posts, though independent verification isn't available.
 
 ## The Verdict
 
-Cline CLI 2.0 is doing the right things in the right order. The open-source credibility is real, the CI/CD angle is differentiated from most IDE-centric competitors, and the parallel agents feature is the kind of thing power users will actually use — not just screenshot for LinkedIn.
+Cline CLI 2.0 is doing the right things in the right order. The open-source credibility is real. The CI/CD angle is differentiated from most IDE-centric competitors. Parallel agents is the kind of feature power users will actually use, not just screenshot for LinkedIn.
 
-That said, this is a crowded and fast-moving lane. Aider has a head start on terminal-native AI coding. GitHub's own tooling is closing the automation gap from the other direction. And the ACP bet is an unproven standard that could look prescient or irrelevant in twelve months.
+That said, this is a crowded and fast-moving lane. Aider has a head start on terminal-native AI coding. GitHub's own tooling is closing the automation gap from the other direction. And the ACP bet is an unproven standard that could look prescient or irrelevant in twelve months. Both outcomes are genuinely possible.
 
-What I'd want to know before fully endorsing this: How does it actually perform on real CI pipelines at scale? The demo commands are clean, but production environments are not demo commands. I'd also want to see the 5M developer figure unpacked — active users versus total installs is a meaningful distinction that doesn't get made here.
+I think this is probably the right tool for teams already running headless automation who want AI-assisted code review baked into their pipelines. It's a harder sell for developers who live primarily in a single IDE and don't have strong feelings about their CI setup.
 
-At 30 days: adoption signal will be whether the Zed and Neovim communities actually use the ACP integration or ignore it. At 90 days: watch the GitHub stars trajectory and whether enterprise teams start showing up in the community. If the headless mode is as solid as advertised, someone's going to build something interesting with it. Whether that someone credits Cline is the whole game.
+What I'd want to know before fully endorsing it: how does it actually perform on real CI pipelines at scale? The demo commands are clean, but production environments are not demo commands. I'd also want the 5M developer figure unpacked. Active users versus total installs is a meaningful distinction that doesn't get made here.
+
+At 30 days, the adoption signal is whether the Zed and Neovim communities actually use the ACP integration or quietly ignore it. At 90 days, watch the GitHub stars trajectory and whether enterprise teams start showing up in the community. If the headless mode is as solid as advertised, someone's going to build something interesting with it. Whether that someone credits Cline is the whole game.

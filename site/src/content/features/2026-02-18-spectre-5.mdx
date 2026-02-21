@@ -21,34 +21,40 @@ author: "jess-tran"
 app_type: "WebApplication"
 ---
 
-## The Macro: The Floor Is Lava for AI Coding Workflows Right Now
+## The Macro: AI Coding Workflows Are Messy and Everyone Knows It
 
-The engineering software market is not small and not slowing down — multiple research sources peg it somewhere in the $65–73 billion range for 2024–2025, with projections that suggest it roughly doubles or triples by the mid-2030s. That's a lot of money looking for a home, and right now a huge chunk of it is chasing the same question: how do you make AI coding agents actually useful in production, rather than in demos?
+The engineering software market sits somewhere between $65 and $73 billion for 2024–2025, depending on which research source you trust. Projections have it doubling or tripling by the mid-2030s. That's a lot of capital chasing a question nobody has cleanly answered yet: how do you make AI coding agents actually useful in production, not just in a demo someone recorded at 2am?
 
-The irony is that the AI coding assistant space has never been more crowded, and yet the signal-to-noise ratio has arguably gotten worse. GitHub Copilot is the comfortable default. Cursor has carved out a devoted following among developers who want more control. Claude's code-native features, Devin, Aider, and a dozen other tools all have their own philosophical takes on what "agentic" even means. The result is a landscape where individual tools are increasingly capable but the workflows surrounding them remain largely ad hoc — duct tape and vibes.
+The crowding in AI coding tools hasn't produced clarity. It's produced noise.
 
-There's a broader pattern here worth naming: as the raw capability of underlying models has improved faster than most people expected, the bottleneck has quietly shifted from "can the model write code" to "can the model write the right code, in the right order, without destroying what you built yesterday." That's a workflow problem, not a model problem. And it's a problem that scales badly — the more autonomous you make an agent, the more expensive its mistakes become.
+GitHub Copilot is the path of least resistance. Cursor has a devoted following among developers who want more control over what's happening. Claude's code-native features, Devin, Aider, a dozen others. Each one has its own opinion about what "agentic" means. What they share is an assumption that individual capability is the thing worth optimizing. The workflows wrapping these tools are mostly improvised. Duct tape. Vibes.
 
-The engineering job market context adds some texture here too. One well-sourced industry newsletter noted that engineering headcount is still roughly 22% below its early 2022 peak with no clear recovery signal. Teams are being asked to do more with fewer people. The appeal of a structured agentic workflow that keeps an AI agent from going off the rails is not abstract — it's a real operational need.
+Here's the pattern that actually matters: model capability improved faster than anyone expected, and the bottleneck quietly moved. It's no longer "can the model write code." It's "can the model write the right code, in the right order, without wrecking what you built yesterday." That's a process problem. And it compounds badly. The more autonomy you give an agent, the more expensive its mistakes get.
 
-## The Micro: Seven Slash Commands and a Theory of Software Development
+The job market context matters here too. One well-sourced industry newsletter put engineering headcount at roughly 22% below its early 2022 peak, with no clear recovery signal. Smaller teams are being asked to ship more. A structured agentic workflow that keeps an AI from confidently going sideways isn't an abstract nice-to-have. It's an operational need that a lot of teams are feeling right now.
 
-SPECTRE is an open-source agentic coding workflow that lives on GitHub under the Codename-Inc organization. The core idea is disarmingly simple: instead of firing a prompt at an AI coding agent and hoping for the best, you walk it through a defined seven-stage pipeline — /Scope, /Plan, /Execute, /Clean, /Test, /Rebase, /Evaluate. Each slash command represents a discrete phase of the development process, and the whole thing is designed to give AI agents the kind of structured scaffolding that prevents them from making confident, plausible-sounding messes.
+## The Micro: Seven Slash Commands and a Theory of How Software Gets Built
 
-It's MIT licensed, which matters. This isn't a SaaS wrapper with a pricing page you have to squint at — it's a framework you can read, fork, and modify. As of the launch, the repo has 83 stars and 10 forks, which is modest but not nothing for a project that's essentially asking developers to reconsider their entire agentic workflow rather than just install a plugin.
+SPECTRE is an open-source agentic coding workflow hosted on GitHub under the Codename-Inc organization. The premise is simple enough to explain in one sentence: instead of throwing a prompt at an AI agent and hoping for coherent output, you walk it through a defined seven-stage pipeline. /Scope, /Plan, /Execute, /Clean, /Test, /Rebase, /Evaluate. Each command is a discrete phase. The whole structure is designed to give agents the kind of scaffolding that stops them from producing confident, plausible-sounding disasters.
 
-The product is positioned for "product builders" rather than pure engineers, which is a deliberate framing choice. The workflow maps pretty cleanly onto how a product-minded developer actually thinks about shipping something — scope it first, plan it out, build it, clean it up, test it, reconcile it with existing state, then evaluate. It's not trying to automate judgment; it's trying to structure the execution of judgment that's already been made.
+MIT licensed. That detail matters to me.
 
-On Product Hunt, SPECTRE landed at daily rank #10 with 119 votes and 23 comments. That's a respectable showing for a developer tools launch without an obvious marketing budget behind it — the comments-to-votes ratio suggests actual engagement rather than a pure upvote campaign. The open-source positioning likely helps here: the PH audience for dev tools is savvy enough to recognize when something is genuinely available versus vaporware with a waitlist.
+This isn't a SaaS wrapper with a pricing page you have to decode. It's a framework you can read, fork, and change. The repo had 83 stars and 10 forks at launch, which is modest. It's also a project asking developers to rethink their entire agentic workflow rather than just install something, so modest is probably the realistic baseline.
 
-The absence of clear competitor differentiation in the repo is the most obvious gap. Aider, for instance, already has structured session management. The question of what SPECTRE does that a disciplined Cursor workflow with good prompt templates doesn't — that's still somewhat open.
+The positioning targets "product builders" rather than pure engineers. That framing is deliberate and mostly accurate. The seven stages map cleanly onto how a product-minded developer actually thinks about shipping: scope it, plan it, build it, clean it, test it, reconcile it with existing state, evaluate. It's not trying to replace judgment. It's trying to structure the execution of judgment you've already made.
+
+It got solid traction on launch day, which suggests real interest rather than just a coordinated push.
+
+The clearest gap in the repo is competitive differentiation. Aider has structured session management. A disciplined Cursor workflow with good prompt templates covers some of this ground too. What SPECTRE does that those approaches don't, specifically and demonstrably, is still a partially open question.
 
 ## The Verdict
 
-SPECTRE is making a real bet: that the problem with AI coding agents isn't capability, it's process discipline. That bet is probably correct. The challenge is that "structured workflow" is a hard thing to distribute — it requires behavior change from developers who already have habits, tooling preferences, and calendar constraints.
+SPECTRE is making a specific bet: the problem with AI coding agents is process discipline, not raw capability. That bet is probably right. The harder problem is that "structured workflow" is genuinely difficult to distribute. It requires behavior change from developers who already have habits, strong tool preferences, and not much patience for friction that doesn't immediately pay off.
 
-At 30 days, the number to watch is GitHub stars trajectory. 83 at launch is fine; the question is whether it compounds or plateaus. At 60 days, community contributions to the workflow stages would be a meaningful signal — a fork that adds an eighth command, or a substantive issue thread about /Rebase edge cases, would suggest real adoption rather than curiosity. At 90 days, if there's no documentation showing real-world project examples, this risks becoming a framework people star but don't use.
+I think this is probably useful for product-minded developers who are already frustrated by how quickly agentic sessions go sideways. It's a harder sell for engineers who have already built something that works for them, even if what works for them is technically messier.
 
-What we'd want to know before fully endorsing it: does this work as well with Claude as it does with GPT-4o? Is the workflow model-agnostic in practice or just in theory? And who at Codename-Inc is the actual driver here, because the founder research was inconclusive enough that we're genuinely uncertain.
+At 30 days, I'd watch the GitHub stars trajectory. 83 at launch is a starting point, not a signal. At 60 days, community contributions to the workflow stages would tell me something real. A fork that adds an eighth command, a substantive issue thread about /Rebase edge cases. That kind of activity separates actual adoption from curiosity. At 90 days, if there are no documented real-world project examples, SPECTRE risks becoming a framework people star and never open again.
 
-The open-source call is the right one. The concept is sound. Whether SPECTRE becomes infrastructure or a footnote depends almost entirely on whether the team can build a community around the methodology — not just the code.
+What I'd want to know before fully endorsing it: does this work as well with Claude as with GPT-4o? Is model-agnostic a real claim or a theoretical one? And who at Codename-Inc is actually driving this, because the founder research was inconclusive enough that I'm genuinely uncertain.
+
+The open-source call is correct. The concept is sound. Whether SPECTRE becomes infrastructure or a footnote comes down to whether the team can build a community around the methodology. Not just the code.

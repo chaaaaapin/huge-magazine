@@ -22,32 +22,36 @@ app_type: "WebApplication"
 
 ## The Macro: Everyone Agrees Onboarding Is Broken, Nobody Agrees on the Fix
 
-Here's the thing about the customer success software market: it's enormous, it's growing fast, and it has been confidently solving the same problem — user activation — for fifteen years with middling results. Multiple sources peg the customer success platforms market at roughly $1.86 billion in 2024, projected to climb somewhere between $9 and $10 billion by 2032. That's a 22% CAGR, which is the kind of number that makes VCs print a slide deck before breakfast.
+The customer success software market is enormous, growing fast, and has been confidently solving the same problem for fifteen years with middling results. Multiple sources put the customer success platforms market at roughly $1.86 billion in 2024, projected to climb somewhere between $9 and $10 billion by 2032. That's a 22% CAGR. VCs have built entire slide decks on worse numbers.
 
-And yet. Walk into any SaaS company's Slack and you'll find a channel called something like #onboarding-hell. The standard playbook — a product tour built in Appcues, a drip email sequence, maybe a Loom video someone recorded in 2021 that's now embarrassingly outdated — works fine until it doesn't. Which is to say, it works fine for the users who would have figured it out anyway.
+And yet. Walk into any SaaS company's Slack and you'll find a channel called something like #onboarding-hell.
 
-The people who actually need help? They churn before they ever see value.
+The standard playbook, product tour in Appcues, drip email sequence, maybe a Loom someone recorded in 2021 that nobody has updated since, works fine for users who would have figured it out anyway. The people who actually needed guidance? They churned before they ever saw value. That's been true for a decade and the industry has mostly shrugged.
 
-The incumbents here are not exactly sleeping. Intercom has been pushing AI-assisted support hard. Gainsight and Totango own the enterprise customer success space. Pendo and Appcues own the interactive walkthrough lane. What nobody has really committed to — at least not with a dedicated product — is replacing the live onboarding call itself. That's the specific gap Obi is trying to occupy, which, look, is either a clever niche or a sign that everyone else tried it and quietly moved on. The timing argument is credible though: voice AI quality in 2025 is genuinely different from what it was even eighteen months ago. That's not hype, it's just how the models improved.
+The incumbents aren't sleeping, to be fair. Intercom has been pushing AI-assisted support hard. Gainsight and Totango own enterprise customer success. Pendo and Appcues own the interactive walkthrough lane. What nobody has committed to with a dedicated product is replacing the live onboarding call itself. That's the specific gap Obi is trying to occupy. Which is either a clever niche or a quiet signal that everyone else tried it and moved on. The timing argument is credible though. Voice AI quality in 2025 is genuinely different from what it was eighteen months ago. That's not hype. That's just how the models improved.
 
 ## The Micro: A Voice Agent That Shows Up at 2am When Your CSM Doesn't
 
-Obi — built by the team at Cor (getcor.ai) — is a voice AI agent designed to conduct 1:1 onboarding calls with new users. Not a chatbot. Not a tooltip sequence. A voice conversation, on demand, at whatever scale you need, 24/7. The pitch is that a new user can get the kind of guided, responsive setup experience that used to require an actual human CSM — but without scheduling a Zoom, waiting for business hours, or watching a video that doesn't quite answer their question.
+Obi, built by the team at Cor (getcor.ai), is a voice AI agent designed to conduct 1:1 onboarding calls with new users. Not a chatbot. Not a tooltip sequence. An actual voice conversation, on demand, at whatever scale you need, around the clock.
 
-The product apparently listens, responds in real time, walks users through their specific setup situation, and then — this is the part that's genuinely interesting — surfaces insights to the team after each session. So you're not just replacing the onboarding call, you're also capturing structured data from it. That's a meaningful product decision: instead of the call being a black hole, it becomes a feedback loop.
+The pitch is straightforward. A new user gets the kind of guided, responsive setup experience that used to require a human CSM, without scheduling a Zoom, waiting for business hours, or watching a video that doesn't quite answer their question.
 
-Obi 2.0 launched alongside a reported $2 million funding round, according to the company's website. The Product Hunt numbers are modest but respectable — 224 votes, 36 comments, a #5 daily rank. That's not a viral explosion, but it's a real signal of genuine interest rather than coordinated upvoting. The comments are worth watching; 36 on a launch like this usually means people actually have questions rather than just dropping "congrats on the launch" and leaving.
+The product listens, responds in real time, and walks users through their specific setup situation. Then it surfaces insights to the team after each session. That last part is where it gets interesting. Instead of the onboarding call being a black hole, it becomes a feedback loop. Structured data from every conversation, handed back to the people who built the product. That's a meaningful design decision, not a throwaway feature.
 
-The company claims enterprise names like Anthropic, HubSpot, and Verkada are in the trusted-customer logos on their site — though the case study content visible in the scrape reads like placeholder text, so take the specifics there with a grain of salt until they publish full case studies.
+Obi 3 launched alongside a reported $2 million funding round, per the company's website. It got solid traction on launch day. The comments are worth paying attention to. That many replies on a launch like this usually means people have actual questions rather than just dropping "congrats" and leaving.
 
-The key technical bet is that voice AI is now good enough to handle the unpredictability of real user questions. That's a meaningful assumption.
+The company lists enterprise names like Anthropic, HubSpot, and Verkada in their trusted-customer logos. The case study content visible on the site reads like placeholder text, so I'd hold the specifics loosely until full case studies are published.
+
+The core technical bet is that voice AI is now good enough to handle the unpredictability of real user questions. That's not a small assumption.
 
 ## The Verdict
 
-Obi is solving a problem that is genuinely underserved, which is more than you can say for most Product Hunt launches on a given Tuesday. The insight that the onboarding *call* — not the onboarding *tour* — is the format worth replicating is actually sharp. A tooltip tells you what a button does. A conversation figures out what you're actually trying to accomplish.
+Obi is working on a problem that is genuinely underserved. The insight that the onboarding call, not the onboarding tour, is the format worth replicating is actually sharp. A tooltip tells you what a button does. A conversation figures out what you're actually trying to accomplish. Those are different things.
 
-That said, I'd be cautious about the execution risk here. Voice AI for customer-facing onboarding is not a forgiving context. One confidently wrong answer about a billing setting, one conversation that goes sideways and can't recover gracefully, and you've done more damage than a clunky product tour ever could. The post-session insights feature is the sleeper story — if that data is actually structured and useful, it could be the thing that makes CSMs adopt this enthusiastically rather than tolerating it.
+That said, execution risk here is real.
 
-At 30 days I want to see real case studies with actual completion and activation metrics, not logo soup. At 60 days I want to know how it handles edge cases — confused users, non-native speakers, weird product questions outside the training scope. At 90 days, the question is whether the teams using it see measurable improvement in time-to-value for new users.
+Voice AI in customer-facing onboarding is not a forgiving context. One confidently wrong answer about a billing setting, one conversation that spirals and can't recover, and you've done more damage than a clunky product tour ever could. The margin for error is thin. The post-session insights feature is the sleeper story. If that data comes back structured and genuinely useful, it's the thing that makes CSMs adopt this willingly rather than tolerate it as a cost-cutting measure.
 
-The $2M raise is seed-sized, which means they're still in prove-it mode. They should be. This is a bet worth watching — just not worth declaring won yet.
+At 30 days I want real case studies with actual completion and activation metrics. Not logo soup. At 60 days I want to know how it handles edge cases: confused users, non-native speakers, questions that fall outside the training scope. At 90 days, the question is whether teams using it see measurable improvement in time-to-value.
+
+The $2 million raise is seed-sized. They're still in prove-it mode and they should be. I think this is probably a strong fit for mid-market SaaS companies with high onboarding drop-off and lean CS teams. I'm more skeptical about enterprise contexts where a bad AI interaction carries real reputational cost and buyers want human accountability baked into the contract. Worth watching. Not worth declaring won yet.

@@ -1,0 +1,154 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import HeroFeature from '../../components/HeroFeature.astro';
+import FeatureCard from '../../components/FeatureCard.astro';
+
+export async function getStaticPaths() {
+  const categories = [
+    { slug: 'artificial-intelligence', name: 'Artificial Intelligence', topics: ['Artificial Intelligence', 'AI', 'Machine Learning', 'Deep Learning'] },
+    { slug: 'developer-tools', name: 'Developer Tools', topics: ['Developer Tools', 'Engineering', 'APIs', 'DevOps', 'Programming'] },
+    { slug: 'design-tools', name: 'Design & Creative', topics: ['Design Tools', 'Design', 'Creative', 'UI/UX'] },
+    { slug: 'productivity', name: 'Productivity', topics: ['Productivity', 'Task Management', 'Time Management'] },
+    { slug: 'marketing', name: 'Marketing', topics: ['Marketing', 'Growth Hacking', 'SEO', 'Advertising', 'Content Marketing'] },
+    { slug: 'sales', name: 'Sales & CRM', topics: ['Sales', 'CRM', 'Sales & CRM', 'Lead Generation'] },
+    { slug: 'analytics', name: 'Analytics', topics: ['Analytics', 'Data', 'Business Intelligence', 'Metrics'] },
+    { slug: 'saas', name: 'SaaS & B2B', topics: ['SaaS', 'B2B', 'Business', 'Enterprise'] },
+    { slug: 'finance', name: 'Finance & Fintech', topics: ['Finance', 'Fintech', 'Payments', 'Banking', 'Crypto'] },
+    { slug: 'health-wellness', name: 'Health & Wellness', topics: ['Health & Fitness', 'Health', 'Wellness', 'Medical', 'Mental Health'] },
+    { slug: 'education', name: 'Education', topics: ['Education', 'Learning', 'EdTech', 'E-learning'] },
+    { slug: 'no-code', name: 'No-code Tools', topics: ['No-code', 'Low-code', 'No Code', 'Automation'] },
+    { slug: 'mobile', name: 'Mobile Apps', topics: ['iOS', 'Android', 'Mobile', 'Apps'] },
+    { slug: 'browser-extensions', name: 'Browser Extensions', topics: ['Chrome Extensions', 'Browser Extensions', 'Firefox', 'Browser'] },
+    { slug: 'open-source', name: 'Open Source', topics: ['Open Source', 'GitHub'] },
+    { slug: 'security', name: 'Security & Privacy', topics: ['Security', 'Privacy', 'Cybersecurity', 'Authentication'] },
+    { slug: 'social', name: 'Social & Community', topics: ['Social', 'Community', 'Social Media', 'Networking'] },
+    { slug: 'ecommerce', name: 'E-commerce', topics: ['E-commerce', 'Ecommerce', 'Shopping', 'Retail'] },
+    { slug: 'web3', name: 'Web3 & Crypto', topics: ['Web3', 'Crypto', 'Blockchain', 'NFT', 'DeFi'] },
+    { slug: 'infrastructure', name: 'Infrastructure', topics: ['Infrastructure', 'Cloud', 'DevOps', 'Databases', 'Hosting'] },
+  ];
+
+  const allFeatures = await getCollection('features');
+
+  return categories.map(cat => ({
+    params: { slug: cat.slug },
+    props: {
+      category: cat,
+      features: allFeatures.filter(f =>
+        f.data.topics.some(t =>
+          cat.topics.some(ct =>
+            t.toLowerCase().includes(ct.toLowerCase()) || ct.toLowerCase().includes(t.toLowerCase())
+          )
+        )
+      ).sort((a, b) => b.data.ph_votes - a.data.ph_votes)
+    }
+  }));
+}
+
+const { category, features } = Astro.props;
+const hero = features[0];
+const rest = features.slice(1);
+---
+
+<BaseLayout
+  title={`${category.name} | HUGE Magazine`}
+  description={`The best ${category.name} products, reviewed by HUGE Magazine. We write features, not press releases.`}
+>
+  <Header />
+
+  <main>
+    <div class="container">
+      <div class="category-header">
+        <a href="/" class="back-link">← All editions</a>
+        <h1 class="category-title">Category: {category.name}</h1>
+        <p class="category-count">
+          {features.length === 0
+            ? 'No features yet'
+            : `${features.length} feature${features.length === 1 ? '' : 's'}`}
+        </p>
+      </div>
+
+      <hr class="divider" />
+
+      {features.length === 0 ? (
+        <div class="empty-state">
+          <p>No features in this category yet. Check back soon.</p>
+          <a href="/" class="btn-link">← See all editions</a>
+        </div>
+      ) : (
+        <>
+          {hero && <HeroFeature feature={hero} />}
+          {rest.length > 0 && (
+            <div class="category-grid">
+              {rest.map(f => <FeatureCard feature={f} />)}
+            </div>
+          )}
+        </>
+      )}
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .category-header {
+    padding: 2rem 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .back-link {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    transition: color 0.15s;
+    margin-bottom: 0.5rem;
+  }
+
+  .back-link:hover {
+    color: var(--accent);
+  }
+
+  .category-title {
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 900;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  .category-count {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    margin-top: 0;
+  }
+
+  .empty-state {
+    padding: 4rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    color: var(--text-secondary);
+  }
+
+  @media (max-width: 768px) {
+    .category-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

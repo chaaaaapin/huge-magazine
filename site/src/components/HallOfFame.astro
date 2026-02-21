@@ -1,0 +1,218 @@
+---
+interface Feature {
+  data: {
+    title: string;
+    ph_votes: number;
+    ph_slug: string;
+    logo: string;
+    tagline: string;
+    topics: string[];
+    date: string;
+  };
+  slug: string;
+}
+
+interface Props {
+  features: Feature[];
+}
+
+const { features } = Astro.props;
+
+// Sort by votes descending, take top 30 (or all if fewer)
+const sorted = [...features]
+  .sort((a, b) => b.data.ph_votes - a.data.ph_votes)
+  .slice(0, 30);
+
+// Duplicate for seamless marquee loop (only animate if enough items)
+const shouldAnimate = sorted.length >= 6;
+const items = shouldAnimate ? [...sorted, ...sorted] : sorted;
+
+
+---
+
+<section class="hof-section">
+  <div class="container">
+    <div class="hof-header">
+      <span class="hof-trophy">🏆</span>
+      <span class="hof-label">Hall of Fame</span>
+      <span class="hof-sub">Our most popular startup reviews.</span>
+    </div>
+  </div>
+
+  <div class="hof-track-wrap">
+    <div class={`hof-track ${shouldAnimate ? 'hof-track--animate' : ''}`}>
+      {items.map((f) => (
+        <a href={`/feature/${f.slug}`} class="hof-item" title={`${f.data.ph_slug} — ${f.data.tagline}`}>
+          <div class="hof-logo-wrap">
+            <img
+              src={f.data.logo}
+              alt={f.data.ph_slug}
+              class="hof-logo"
+              width="44"
+              height="44"
+              loading="lazy"
+              onerror="this.style.display='none'; this.parentElement.classList.add('hof-logo-fallback')"
+            />
+          </div>
+          <span class="hof-name">{f.data.ph_slug}</span>
+        </a>
+      ))}
+    </div>
+    <div class="hof-fade hof-fade--left"></div>
+    <div class="hof-fade hof-fade--right"></div>
+  </div>
+</section>
+
+<style>
+  .hof-section {
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 0 0.9rem;
+  }
+
+  .hof-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .hof-trophy {
+    font-size: 0.9rem;
+    line-height: 1;
+  }
+
+  .hof-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+  }
+
+  .hof-sub {
+    font-size: 0.68rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    letter-spacing: 0.02em;
+  }
+
+  /* Track wrapper — full bleed, clips overflow */
+  .hof-track-wrap {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hof-track {
+    display: flex;
+    gap: 0.75rem;
+    overflow-x: auto;
+    padding: 0 1.5rem 0.25rem;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    /* Enough width for all items */
+    width: max-content;
+  }
+
+  .hof-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Animated marquee (when enough items) */
+  .hof-track--animate {
+    animation: hofScroll 60s linear infinite;
+    /* pause on hover */
+  }
+
+  .hof-track--animate:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes hofScroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* Individual item */
+  .hof-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    text-decoration: none;
+    cursor: pointer;
+    flex-shrink: 0;
+    width: 68px;
+    transition: transform 0.15s ease;
+  }
+
+  .hof-item:hover {
+    transform: translateY(-2px);
+  }
+
+  .hof-logo-wrap {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1.5px solid var(--border);
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .hof-logo-wrap.hof-logo-fallback {
+    background: var(--tag-bg);
+  }
+
+  .hof-logo {
+    width: 44px;
+    height: 44px;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+  }
+
+  .hof-name {
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 68px;
+    line-height: 1.2;
+  }
+
+  /* Gradient fades on edges */
+  .hof-fade {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 80px;
+    pointer-events: none;
+  }
+
+  .hof-fade--left {
+    left: 0;
+    background: linear-gradient(to right, var(--bg), transparent);
+  }
+
+  .hof-fade--right {
+    right: 0;
+    background: linear-gradient(to left, var(--bg), transparent);
+  }
+
+  @media (max-width: 768px) {
+    .hof-track {
+      padding: 0 1rem 0.25rem;
+    }
+
+    .hof-sub {
+      display: none;
+    }
+  }
+</style>

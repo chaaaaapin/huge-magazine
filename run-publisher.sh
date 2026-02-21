@@ -65,7 +65,7 @@ EOF
 echo "[$TIMESTAMP] Task created in Mini inbox. Task checker will process within 15 minutes."
 
 # Send Slack notification
-curl -X POST "https://hooks.zapier.com/hooks/catch/23735911/uqel68j/" \
+curl -X POST "" \
   -H "Content-Type: application/json" \
   -d "{\"message\": \"📰 HUGE: Daily publisher started at ${TIMESTAMP}\"}" \
   2>/dev/null || echo "Webhook failed (non-critical)"

@@ -2,33 +2,24 @@ import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
 
 export async function GET(context) {
-  // Get all articles from all categories
-  const breakthroughs = await import.meta.glob('../content/breakthroughs/*.md', { eager: true });
-  const articles = await import.meta.glob('../content/articles/*.md', { eager: true });
-  const opinions = await import.meta.glob('../content/opinions/*.md', { eager: true });
-  const profiles = await import.meta.glob('../content/profiles/*.md', { eager: true });
+  const features = await getCollection('features');
 
-  // Combine all posts
-  const allPosts = [
-    ...Object.values(breakthroughs),
-    ...Object.values(articles),
-    ...Object.values(opinions),
-    ...Object.values(profiles)
-  ].map(post => ({
-    title: post.frontmatter.title,
-    description: post.frontmatter.description,
-    pubDate: new Date(post.frontmatter.pubDate),
-    link: post.url,
-  }));
-
-  // Sort by date
-  allPosts.sort((a, b) => b.pubDate - a.pubDate);
+  // Sort newest first
+  features.sort((a, b) => {
+    if (b.data.date !== a.data.date) return b.data.date.localeCompare(a.data.date);
+    return a.data.ph_rank - b.data.ph_rank;
+  });
 
   return rss({
     title: 'HUGE Magazine',
-    description: 'Where Innovation Meets Impact. Breakthrough ideas, emerging technologies, and the innovations shaping tomorrow.',
+    description: 'Daily startup features, powered by Product Hunt. We write features, not press releases.',
     site: context.site,
-    items: allPosts,
+    items: features.map(f => ({
+      title: f.data.title,
+      description: f.data.excerpt,
+      link: `/feature/${f.slug}/`,
+      pubDate: new Date(f.data.date + 'T12:00:00Z'),
+    })),
     customData: '<language>en-us</language>',
   });
 }

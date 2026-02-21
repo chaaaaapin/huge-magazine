@@ -1,118 +1,200 @@
 ---
 const currentYear = new Date().getFullYear();
+
+const categories = [
+  { name: 'Artificial Intelligence', slug: 'artificial-intelligence' },
+  { name: 'Developer Tools', slug: 'developer-tools' },
+  { name: 'Design & Creative', slug: 'design-tools' },
+  { name: 'Productivity', slug: 'productivity' },
+  { name: 'Marketing', slug: 'marketing' },
+  { name: 'Sales & CRM', slug: 'sales' },
+  { name: 'Analytics', slug: 'analytics' },
+  { name: 'SaaS & B2B', slug: 'saas' },
+  { name: 'Finance & Fintech', slug: 'finance' },
+  { name: 'Health & Wellness', slug: 'health-wellness' },
+  { name: 'Education', slug: 'education' },
+  { name: 'No-code Tools', slug: 'no-code' },
+  { name: 'Mobile Apps', slug: 'mobile' },
+  { name: 'Browser Extensions', slug: 'browser-extensions' },
+  { name: 'Open Source', slug: 'open-source' },
+  { name: 'Security & Privacy', slug: 'security' },
+  { name: 'Social & Community', slug: 'social' },
+  { name: 'E-commerce', slug: 'ecommerce' },
+  { name: 'Web3 & Crypto', slug: 'web3' },
+  { name: 'Infrastructure', slug: 'infrastructure' },
+];
 ---
 
-<footer class="footer">
-  <div class="container">
-    <div class="footer-content">
-      <div class="footer-section">
-        <h3 class="footer-logo">HUGE</h3>
-        <p class="footer-tagline">Where Innovation Meets Impact</p>
-        <p class="footer-description">
-          Breakthrough ideas, emerging technologies, and the innovations shaping tomorrow.
-        </p>
-      </div>
+<footer class="site-footer">
+  <div class="container footer-body">
 
-      <div class="footer-section">
-        <h4>Explore</h4>
-        <ul class="footer-links">
-          <li><a href="/breakthroughs">Breakthroughs</a></li>
-          <li><a href="/articles">Articles</a></li>
-          <li><a href="/opinions">Opinions</a></li>
-          <li><a href="/profiles">Profiles</a></li>
-        </ul>
+    <!-- Col 1: Brand -->
+    <div class="footer-brand">
+      <div class="footer-logo-wrap">
+        <div class="logo-stack">
+          <span class="logo-this-is" style="color: rgba(184,232,197,0.7)">This Is</span>
+          <span class="logo-huge" style="color: var(--footer-text)">HUGE</span>
+        </div>
       </div>
-
-      <div class="footer-section">
-        <h4>Company</h4>
-        <ul class="footer-links">
-          <li><a href="/about">About</a></li>
-          <li><a href="/contact">Contact</a></li>
-          <li><a href="/rss.xml">RSS Feed</a></li>
-        </ul>
+      <p class="footer-tagline">Daily startup features from Product Hunt. We write features, not press releases.</p>
+      <div class="footer-links">
+        <a href="/about">About</a>
+        <a href="mailto:team@hugemagazine.com">Contact</a>
+        <a href="/rss.xml">RSS</a>
       </div>
+      <a href="mailto:team@hugemagazine.com" class="footer-email">team@hugemagazine.com</a>
     </div>
 
-    <div class="footer-bottom">
-      <p>&copy; {currentYear} HUGE Magazine. All rights reserved.</p>
+    <!-- Col 2: Categories -->
+    <div class="footer-cats">
+      <h3 class="footer-section-label">Categories</h3>
+      <ul class="footer-cat-list">
+        {categories.map(cat => (
+          <li>
+            <a href={`/category/${cat.slug}`}>{cat.name}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container footer-bottom-inner">
+      <span>&copy; {currentYear} HUGE Magazine</span>
     </div>
   </div>
 </footer>
 
 <style>
-  .footer {
-    background: var(--color-huge-black);
-    color: var(--color-huge-white);
-    padding: var(--space-2xl) 0 var(--space-lg);
-    margin-top: var(--space-2xl);
+  .site-footer {
+    background: var(--footer-bg);
+    color: var(--footer-text);
+    margin-top: 5rem;
   }
 
-  .footer-content {
+  .footer-body {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: var(--space-xl);
-    margin-bottom: var(--space-xl);
+    grid-template-columns: 1fr 2fr;
+    gap: 3rem;
+    padding-top: 3rem;
+    padding-bottom: 2.5rem;
   }
 
-  .footer-section h3 {
-    font-size: 2rem;
-    font-weight: 800;
-    margin-bottom: var(--space-xs);
-  }
-
-  .footer-section h4 {
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: var(--space-md);
-    color: var(--color-electric-blue);
+  /* ── Brand col ── */
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
 
   .footer-tagline {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: rgba(250, 250, 250, 0.6);
-    margin-bottom: var(--space-md);
-  }
-
-  .footer-description {
-    color: rgba(250, 250, 250, 0.8);
-    font-size: 0.95rem;
-    line-height: 1.6;
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: rgba(184, 232, 197, 0.6);
+    max-width: 22ch;
   }
 
   .footer-links {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .footer-links li {
-    margin-bottom: var(--space-xs);
+    display: flex;
+    gap: 1.25rem;
   }
 
   .footer-links a {
-    color: rgba(250, 250, 250, 0.8);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--footer-text);
     text-decoration: none;
-    transition: color 0.2s ease;
+    opacity: 0.6;
+    transition: opacity 0.15s;
   }
 
   .footer-links a:hover {
-    color: var(--color-electric-blue);
+    opacity: 1;
+    color: var(--accent);
   }
 
+  .footer-email {
+    font-size: 0.78rem;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    opacity: 0.85;
+    transition: opacity 0.15s;
+  }
+
+  .footer-email:hover {
+    opacity: 1;
+  }
+
+  /* ── Categories col ── */
+  .footer-cats {
+    padding-top: 0.2rem;
+  }
+
+  .footer-section-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .footer-cat-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.4rem 1rem;
+  }
+
+  .footer-cat-list li a {
+    font-size: 0.78rem;
+    color: rgba(184, 232, 197, 0.55);
+    text-decoration: none;
+    transition: color 0.15s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+  }
+
+  .footer-cat-list li a:hover {
+    color: var(--accent);
+  }
+
+  /* ── Bottom bar ── */
   .footer-bottom {
-    padding-top: var(--space-lg);
-    border-top: 1px solid rgba(250, 250, 250, 0.1);
-    text-align: center;
-    color: rgba(250, 250, 250, 0.6);
-    font-size: 0.9rem;
+    border-top: 1px solid rgba(184, 232, 197, 0.1);
+    padding: 1rem 0;
   }
 
+  .footer-bottom-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    color: rgba(184, 232, 197, 0.3);
+    letter-spacing: 0.03em;
+  }
+
+  /* ── Mobile ── */
   @media (max-width: 768px) {
-    .footer-content {
+    .footer-body {
       grid-template-columns: 1fr;
-      gap: var(--space-lg);
+      gap: 2rem;
+    }
+
+    .footer-cat-list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .footer-bottom-inner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
     }
   }
 </style>

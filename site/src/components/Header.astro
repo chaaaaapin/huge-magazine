@@ -1,108 +1,225 @@
 ---
-const navItems = [
-  { href: '/breakthroughs', label: 'Breakthroughs' },
-  { href: '/articles', label: 'Articles' },
-  { href: '/opinions', label: 'Opinions' },
-  { href: '/profiles', label: 'Profiles' },
-  { href: '/about', label: 'About' },
-];
+import { getCollection } from 'astro:content';
+
+const allFeatures = await getCollection('features');
+
+// Sort by votes, take top 30
+const sorted = [...allFeatures].sort((a, b) => b.data.ph_votes - a.data.ph_votes).slice(0, 30);
+
+// Pad to at least 16 items for a full marquee strip, then duplicate for seamless loop
+let padded = [...sorted];
+while (padded.length < 16) padded = [...padded, ...sorted];
+const marqueeItems = [...padded, ...padded];
 ---
 
-<header class="header">
-  <div class="container">
-    <nav class="nav">
-      <a href="/" class="logo">
-        <span class="logo-text">HUGE</span>
-        <span class="tagline">Where Innovation Meets Impact</span>
-      </a>
+<header class="site-header">
+  <div class="header-inner">
 
-      <ul class="nav-links">
-        {navItems.map((item) => (
-          <li><a href={item.href}>{item.label}</a></li>
+    <!-- Logo: THIS IS / HUGE stacked, widths matched -->
+    <a href="/" class="logo-link" aria-label="HUGE Magazine home">
+      <div class="logo-stack">
+        <span class="logo-this-is">This Is</span>
+        <span class="logo-huge">HUGE</span>
+      </div>
+    </a>
+
+    <!-- Hall of Fame icon strip — fills remaining space -->
+    <div class="hof-strip" aria-hidden="true">
+      <div class="hof-track">
+        {marqueeItems.map((f) => (
+          <a href={`/feature/${f.slug}`} class="hof-icon-link" tabindex="-1" title={f.data.ph_slug}>
+            <img
+              src={f.data.logo}
+              alt={f.data.ph_slug}
+              width="36"
+              height="36"
+              loading="lazy"
+              onerror="this.parentElement.style.display='none'"
+            />
+          </a>
         ))}
-      </ul>
+      </div>
+      <div class="hof-fade hof-fade--l"></div>
+      <div class="hof-fade hof-fade--r"></div>
+    </div>
+
+    <!-- Nav: info icon only -->
+    <nav class="header-nav" aria-label="Main navigation">
+      <a href="/about" class="nav-info" aria-label="About HUGE Magazine">
+        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="16" x2="12" y2="12"/>
+          <line x1="12" y1="8" x2="12.01" y2="8"/>
+        </svg>
+      </a>
     </nav>
+
   </div>
 </header>
 
 <style>
-  .header {
-    background: var(--color-huge-white);
-    border-bottom: 1px solid rgba(13, 13, 13, 0.1);
+  .site-header {
     position: sticky;
     top: 0;
     z-index: 100;
-    backdrop-filter: blur(10px);
-    background: rgba(250, 250, 250, 0.95);
+    background: rgba(244, 250, 246, 0.97);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 2px solid var(--accent);
   }
 
-  .nav {
+  .header-inner {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: var(--space-md) 0;
+    gap: 1.25rem;
+    padding: 0.75rem 1.5rem;
+    max-width: var(--max-width);
+    margin: 0 auto;
   }
 
-  .logo {
-    display: flex;
-    flex-direction: column;
+  /* ── Logo ── */
+  .logo-link {
     text-decoration: none;
-  }
-
-  .logo-text {
-    font-size: 2.5rem;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    color: var(--color-huge-black);
+    flex-shrink: 0;
     line-height: 1;
   }
 
-  .tagline {
-    font-size: 0.75rem;
-    color: rgba(13, 13, 13, 0.6);
-    letter-spacing: 0.05em;
+  .logo-stack {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .logo-this-is {
+    display: block;
+    font-size: 1.07rem;
+    font-weight: 900;
     text-transform: uppercase;
-    margin-top: 0.25rem;
+    color: var(--text-primary);
+    line-height: 1;
+    /* Justify spreads THIS IS to exactly fill the width set by HUGE below */
+    text-align: justify;
+    text-align-last: justify;
+    white-space: nowrap;
+    letter-spacing: 0.01em;
   }
 
-  .nav-links {
+  .logo-huge {
+    display: block;
+    font-size: 3.4rem;
+    font-weight: 900;
+    color: var(--text-primary);
+    line-height: 0.88;
+    letter-spacing: -0.05em;
+    white-space: nowrap;
+  }
+
+  .logo-link:hover .logo-this-is,
+  .logo-link:hover .logo-huge {
+    opacity: 0.7;
+  }
+
+  /* ── HOF Strip ── */
+  .hof-strip {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    height: 36px;
     display: flex;
-    gap: var(--space-lg);
-    list-style: none;
-    padding: 0;
-    margin: 0;
+    align-items: center;
   }
 
-  .nav-links a {
-    color: var(--color-huge-black);
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.95rem;
-    transition: color 0.2s ease;
+  .hof-track {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    animation: hofScroll 45s linear infinite;
+    width: max-content;
   }
 
-  .nav-links a:hover {
-    color: var(--color-electric-blue);
+  .hof-track:hover {
+    animation-play-state: paused;
   }
 
+  @keyframes hofScroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  .hof-icon-link {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    opacity: 0.75;
+    transition: opacity 0.15s ease;
+  }
+
+  .hof-icon-link:hover {
+    opacity: 1;
+  }
+
+  .hof-icon-link img {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    object-fit: cover;
+    display: block;
+    border: 1px solid var(--border);
+  }
+
+  /* Edge fades */
+  .hof-fade {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 48px;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .hof-fade--l {
+    left: 0;
+    background: linear-gradient(to right, rgba(244, 250, 246, 0.97), transparent);
+  }
+
+  .hof-fade--r {
+    right: 0;
+    background: linear-gradient(to left, rgba(244, 250, 246, 0.97), transparent);
+  }
+
+  /* ── Nav ── */
+  .header-nav {
+    flex-shrink: 0;
+  }
+
+  .nav-info {
+    display: flex;
+    align-items: center;
+    color: var(--text-secondary);
+    transition: color 0.15s;
+  }
+
+  .nav-info:hover {
+    color: var(--accent);
+  }
+
+  /* ── Mobile ── */
   @media (max-width: 768px) {
-    .nav {
-      flex-direction: column;
-      gap: var(--space-md);
+    .logo-huge {
+      font-size: 2.6rem;
     }
 
-    .logo-text {
-      font-size: 2rem;
+    .logo-this-is {
+      font-size: 0.85rem;
     }
 
-    .nav-links {
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: var(--space-sm);
+    .hof-strip {
+      height: 30px;
     }
 
-    .nav-links a {
-      font-size: 0.9rem;
+    .hof-icon-link img {
+      width: 30px;
+      height: 30px;
     }
   }
 </style>

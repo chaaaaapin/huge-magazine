@@ -1,0 +1,180 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import FeatureCard from '../../components/FeatureCard.astro';
+
+export async function getStaticPaths() {
+  const authors = [
+    {
+      slug: 'sarah-munroe',
+      name: 'Sarah Munroe',
+      email: 'sarah@hugemagazine.com',
+      jobTitle: 'Staff Writer',
+      bio: "Sarah has been writing about technology since before it was cool to do so, and will continue doing so long after everyone else has moved on to whatever comes next. She covers AI, productivity tools, and enterprise software with a clinical precision that occasionally cracks into something warmer. Her most-used mobile app in 2025 was Claude — which she will tell you is a tool, not a personality trait, though the line is increasingly blurry.",
+    },
+    {
+      slug: 'jess-tran',
+      name: 'Jess Tran',
+      email: 'jess@hugemagazine.com',
+      jobTitle: 'Staff Writer',
+      bio: "Jess came up in software engineering before deciding that writing about software was more fun than building it (and easier to explain at family dinners). She is extremely online in the way that people who grew up on forums are — which is to say, she has opinions about things that happened on the internet in 2011 and is not sorry about any of them. Covers developer tools, open source, and whatever weird product caught her eye this week. Her most-used mobile app in 2025 was Reddit, which tracks.",
+    },
+    {
+      slug: 'danny-kowalski',
+      name: 'Danny Kowalski',
+      email: 'danny@hugemagazine.com',
+      jobTitle: 'Staff Writer',
+      bio: "Danny works in product somewhere and has done so at several companies you may or may not have heard of. He writes about startups the way a sports fan watches games: with investment, skepticism, and a running commentary nobody asked for. His verdicts are the most likely to age poorly, and he knows it. His most-used mobile app in 2025 was Bonk, which he refuses to explain.",
+    },
+  ];
+
+  const allFeatures = await getCollection('features');
+
+  return authors.map(author => ({
+    params: { slug: author.slug },
+    props: {
+      author,
+      features: allFeatures
+        .filter(f => f.data.author === author.slug)
+        .sort((a, b) => {
+          if (b.data.date !== a.data.date) return b.data.date.localeCompare(a.data.date);
+          return a.data.ph_rank - b.data.ph_rank;
+        }),
+    }
+  }));
+}
+
+const { author, features } = Astro.props;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": author.name,
+  "url": `https://hugemagazine.com/author/${author.slug}`,
+  "email": author.email,
+  "jobTitle": author.jobTitle,
+  "worksFor": {
+    "@type": "Organization",
+    "name": "HUGE Magazine",
+    "url": "https://hugemagazine.com"
+  }
+};
+---
+
+<BaseLayout
+  title={`${author.name} | HUGE Magazine`}
+  description={`${author.name} is a ${author.jobTitle} at HUGE Magazine. ${author.bio.slice(0, 120)}...`}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </Fragment>
+
+  <Header />
+
+  <main>
+    <div class="container">
+      <div class="author-header">
+        <a href="/" class="back-link">← HUGE Magazine</a>
+        <h1 class="author-name">{author.name}</h1>
+        <p class="author-title">{author.jobTitle}</p>
+        <p class="author-bio">{author.bio}</p>
+      </div>
+
+      <hr class="divider" />
+
+      {features.length === 0 ? (
+        <div class="empty-state">
+          <p>No features yet from this author. Check back soon.</p>
+        </div>
+      ) : (
+        <>
+          <p class="features-label">{features.length} feature{features.length === 1 ? '' : 's'}</p>
+          <div class="author-grid">
+            {features.map(f => <FeatureCard feature={f} />)}
+          </div>
+        </>
+      )}
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .author-header {
+    padding: 2.5rem 0 1.5rem;
+    max-width: 680px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .back-link {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    transition: color 0.15s;
+    margin-bottom: 0.5rem;
+  }
+
+  .back-link:hover {
+    color: var(--accent);
+  }
+
+  .author-name {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 900;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  .author-title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0;
+  }
+
+  .author-bio {
+    font-size: 0.97rem;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    margin: 0.5rem 0 0;
+  }
+
+  .features-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+  }
+
+  .author-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 4rem;
+  }
+
+  .empty-state {
+    padding: 4rem 0;
+    color: var(--text-secondary);
+  }
+
+  @media (max-width: 768px) {
+    .author-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

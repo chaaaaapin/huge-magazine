@@ -23,34 +23,38 @@ app_type: "WebApplication"
 
 ## The Macro: The Browser Wars Left a Bookmark-Shaped Crater
 
-Bookmark management is one of those problems that the internet decided was solved and then quietly never solved. Chrome's bookmark bar is fine if you enjoy squinting at 40 truncated tab titles. Safari's sidebar is serviceable in the way that a paper map is serviceable. Firefox's bookmarks exist. This is the state of things.
+Bookmark management is one of those problems the internet declared solved and then quietly never solved. Chrome's bookmark bar is fine if you enjoy squinting at 40 truncated tab titles. Safari's sidebar is serviceable in the way a paper map is serviceable. Firefox's bookmarks exist. This is the state of things.
 
-For a few years, Arc Browser felt like a genuine answer — a browser that treated sidebar organization as a first-class feature rather than an afterthought bolted onto 2004-era infrastructure. Arc users developed real muscle memory around its workspace and sidebar model. Then The Browser Company pivoted toward Dia, their AI-native product, and Arc's development trajectory became... ambiguous. Enthusiastic users were left with a browser they loved and a company that had moved on.
+Arc Browser felt, for a few years, like a genuine answer. It treated sidebar organization as a first-class feature instead of something bolted onto 2004-era infrastructure. Arc users built real muscle memory around its workspace model. Then The Browser Company pivoted toward Dia, their AI-native product, and Arc's development trajectory became ambiguous. Enthusiastic users were left holding a browser they loved and a company that had moved on.
 
-This is not a small constituency. Mac adoption is substantial — Apple's Mac segment generated nearly $7.5 billion in Q1 2024 alone, with year-over-year growth north of 20%, driven by M2 and M3 hardware demand. The Mac user base skews toward exactly the kind of power user who had an opinion about Arc's sidebar. When a product earns that level of loyalty and then gets deprioritized, the people who built workflows around it don't just shrug and open Chrome. They look for alternatives.
+This is not a small constituency.
 
-The bookmark manager niche itself is populated but not exactly thriving. Raindrop.io is the canonical recommendation — cross-platform, polished, freemium. Anybox targets the Mac specifically and does it well. GoodLinks handles read-later. None of them attach directly to the browser window the way Arc's native sidebar did. That specific interaction pattern — the sidebar that lives alongside the browser rather than inside it — is what Arc users actually miss. Nobody had rebuilt it as a standalone tool. Until now, apparently.
+Mac adoption is substantial. Apple's Mac segment generated nearly $7.5 billion in Q1 2024 alone, with year-over-year growth north of 20%, driven by M2 and M3 hardware demand. That user base skews toward exactly the kind of power user who had a strong opinion about Arc's sidebar. When a product earns that level of loyalty and gets deprioritized, those users don't just shrug and open Chrome. They look for something else.
+
+The bookmark manager niche is populated but not thriving. Raindrop.io is the canonical recommendation: cross-platform, polished, freemium. Anybox targets Mac specifically and does it well. GoodLinks handles read-later. None of them attach directly to the browser window the way Arc's native sidebar did. That specific interaction pattern, a sidebar that lives alongside the browser rather than inside it, is what Arc users actually miss. Nobody had rebuilt it as a standalone tool. Until apparently now.
 
 ## The Micro: A Floating Sidebar That Minds Its Own Business
 
-Arcmark is a native macOS app, built in Swift and AppKit, that attaches to whatever browser window you're using as a floating sidebar. Chrome, Arc, Safari, Brave — it doesn't care. The implementation is essentially a system-level window that positions itself next to your browser, which is a technically cleaner approach than a browser extension and also means it works without any browser-specific permissions or updates.
+Arcmark is a native macOS app, built in Swift and AppKit, that attaches to whatever browser you're using as a floating sidebar. Chrome, Arc, Safari, Brave. It doesn't care. The implementation is a system-level window that positions itself next to your browser, which is technically cleaner than a browser extension and means it works without browser-specific permissions or updates.
 
-The feature set is deliberately focused. You get workspaces with custom colors, nested folders with drag-and-drop, inline renaming, cross-workspace search, automatic favicon and title fetching, and an always-on-top mode for when you want it pinned regardless of what else is happening on screen. Bookmarks are stored locally in a single JSON file — no account, no sync, no server somewhere holding your data. Import works from Chrome and Arc.
+The feature set is deliberately focused. You get workspaces with custom colors, nested folders with drag-and-drop, inline renaming, cross-workspace search, automatic favicon and title fetching, and an always-on-top mode for when you want it pinned. Bookmarks are stored locally in a single JSON file. No account, no sync, no server somewhere holding your data. Import works from Chrome and Arc.
 
-It's version 0.1.4, which is not a version number that implies "ready for your most important workflows." It implies "functional enough to launch and get feedback," which is honest.
+It's version 0.1.4.
 
-The Product Hunt numbers are modest but coherent: 198 upvotes, a #5 daily rank, 22 comments. That's a real launch — not viral, not a flop. The Hacker News post ("Show HN: Arcmark") reportedly drew genuine discussion, which matters more for an open-source tool targeting technical Mac users than PH numbers do. The GitHub star count wasn't rendered in the scraped site content, so we can't quote it, but the product is MIT licensed and the repo is public — the community can see exactly what they're getting.
+That version number doesn't imply "ready for your most critical workflows." It implies "functional enough to launch and collect real feedback," which is an honest place to be. It got solid traction on launch day on Product Hunt, and the Show HN post reportedly drew genuine discussion. That matters more for an open-source tool targeting technical Mac users than any ranking does. The product is MIT licensed and the repo is public, so the community can see exactly what they're getting.
 
-The local-first, open-source positioning is doing real work here. For a bookmark manager, privacy is actually relevant — your bookmarks are a map of your interests, research, and projects. Storing them in a JSON file on your own machine is a feature, not a limitation.
+The local-first, open-source positioning is doing real work here. For a bookmark manager, privacy is actually relevant. Your bookmarks are a map of your interests, research, and half-finished projects. Storing them in a JSON file on your own machine is a feature, not a limitation.
 
 ## The Verdict
 
 Arcmark is solving a real problem for a specific person: the ex-Arc user who misses the sidebar and doesn't want to rewire their entire browser setup to get it back. That's a narrower audience than "everyone with bookmarks," but it's an audience with demonstrated willingness to care deeply about this exact thing.
 
-What would make this succeed at 90 days: consistent maintenance, a working sync story for people with multiple Macs (the single-JSON-file approach is elegant until you have two machines), and enough GitHub momentum to signal it won't quietly disappear. Open-source bookmark managers have a habit of stalling at v0.2.
+Ninety days from now, success looks like consistent maintenance, a sync story for people with multiple Macs, and enough GitHub momentum to signal it won't quietly disappear. The single-JSON-file approach is elegant until you have two machines. Open-source bookmark managers have a habit of stalling somewhere around v0.2.
 
-What would make it fail: scope creep, or the opposite — no updates at all. The 0.1.4 version number needs to move. Users who found this through the Arc exodus are used to a browser that shipped weekly. They'll notice if Arcmark goes quiet.
+Failure looks like scope creep, or the opposite: no updates at all.
 
-What we'd want to know before fully endorsing it: how stable is it on Apple Silicon with multiple workspaces and a few hundred bookmarks? Edge cases in sidebar attachment behavior across browser updates? These are the questions that separate "interesting launch" from "tool I actually use."
+Users who found this through the Arc exodus are used to a browser that shipped weekly. They'll notice if Arcmark goes quiet. The 0.1.4 version number needs to move, and it needs to move on a schedule that feels alive.
 
-The case for Arcmark is simple and unforced: it does one thing, it does it without asking for your data, and it exists at a moment when the thing it does has no obvious native alternative. That's a reasonable place to start.
+Before fully endorsing it, I'd want to know how stable it runs on Apple Silicon with multiple workspaces and a few hundred bookmarks. I'd want to know how sidebar attachment behaves across browser updates. Those questions are what separate "interesting launch" from "tool I actually use."
+
+The case for Arcmark is simple. It does one thing, it does it without asking for your data, and it exists at a moment when the thing it does has no obvious native alternative. That's a reasonable place to start.

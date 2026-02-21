@@ -1,0 +1,162 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const allFeatures = await getCollection('features');
+
+// Group by edition date
+const editionMap: Record<string, typeof allFeatures> = {};
+for (const f of allFeatures) {
+  if (!editionMap[f.data.edition]) editionMap[f.data.edition] = [];
+  editionMap[f.data.edition].push(f);
+}
+
+// Sort editions newest first; sort features within each edition by rank
+const editions = Object.entries(editionMap)
+  .sort((a, b) => b[0].localeCompare(a[0]))
+  .map(([date, features]) => ({
+    date,
+    features: features.sort((a, b) => a.data.ph_rank - b.data.ph_rank),
+  }));
+
+function formatDate(dateStr: string) {
+  const d = new Date(dateStr + 'T12:00:00Z');
+  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+}
+---
+
+<BaseLayout
+  title="Archive — All Editions"
+  description="Every HUGE Magazine edition — daily features on the top Product Hunt launches."
+>
+  <Header />
+
+  <main>
+    <div class="container">
+      <div class="archive-header">
+        <a href="/" class="back-link">← Latest edition</a>
+        <h1 class="archive-title">Archive</h1>
+      </div>
+
+      <hr class="divider" />
+
+      <ul class="editions-list">
+        {editions.map(({ date, features }) => (
+          <li class="edition-row">
+            <a href={`/daily/${date}`} class="edition-date-link">
+              {formatDate(date)}
+            </a>
+            <span class="edition-products">
+              {features.map((f, i) => (
+                <>
+                  <a href={`/feature/${f.slug}`} class="edition-product-link">
+                    #{f.data.ph_rank} {f.data.ph_slug}
+                  </a>
+                  {i < features.length - 1 && <span class="mid-dot">·</span>}
+                </>
+              ))}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .archive-header {
+    padding: 1.5rem 0 0.75rem;
+  }
+
+  .back-link {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-decoration: none;
+    margin-bottom: 1rem;
+    transition: color 0.15s;
+  }
+
+  .back-link:hover {
+    color: var(--accent);
+  }
+
+  .archive-title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+  }
+
+  .editions-list {
+    list-style: none;
+    margin-bottom: 4rem;
+  }
+
+  .edition-row {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .edition-row:first-child {
+    border-top: 1px solid var(--border);
+  }
+
+  .edition-date-link {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-decoration: none;
+    white-space: nowrap;
+    min-width: 160px;
+    transition: color 0.15s;
+  }
+
+  .edition-date-link:hover {
+    color: var(--accent);
+  }
+
+  .edition-products {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .edition-product-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .edition-product-link:hover {
+    color: var(--accent);
+  }
+
+  .mid-dot {
+    color: var(--border);
+    font-size: 0.75rem;
+  }
+
+  @media (max-width: 768px) {
+    .edition-row {
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .edition-date-link {
+      min-width: unset;
+    }
+  }
+</style>

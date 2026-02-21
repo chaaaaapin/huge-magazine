@@ -22,34 +22,42 @@ app_type: "WebApplication"
 
 ## The Macro: AI Can Ship Code. It Cannot See Your App.
 
-Something quietly broke in the developer workflow around 2024. Not in a bad way — in a "wait, we have to rethink this whole thing" way. AI coding assistants got genuinely good at writing code. Copilot, Cursor, Claude — pick your poison. What they didn't get good at was debugging in context. They can read your files. They cannot see your running app, your logs, your network tab, or the exact sequence of clicks a user made before everything fell apart.
+Something quietly broke in developer workflows around 2024. Not badly. More like a "wait, we need to rethink this entire thing" kind of break. AI coding assistants got genuinely good at writing code. Copilot, Cursor, Claude. Pick your poison. What they didn't get good at was debugging in context. They can read your files. They cannot see your running app, your logs, your network tab, or the exact sequence of clicks a user made before everything fell apart.
 
-This is the gap that a small but growing category of tooling is trying to close. The Model Context Protocol — MCP, an open standard Anthropic shipped late 2024 — is part of the plumbing here. It gives AI agents a structured way to pull in external context at inference time, rather than forcing developers to paste walls of text into a chat window and hope for the best. The protocol itself is table stakes now; the interesting work is what you build on top of it.
+That gap is what a small but growing category of tooling is trying to close.
 
-The broader market backdrop is real, even if the specific numbers vary depending on which analyst you trust. Chrome extension market figures floating around range from $2.5B to $7.8B depending on scope and methodology (the spread there is wide enough to be suspicious, so take it loosely), but the directional story is consistent: extensions as a delivery layer for developer tooling are growing, and AI-augmented ones are growing faster. Chrome still holds somewhere north of 64% browser market share as of 2025, which means Chrome-native capture is still a reasonable go-to-market wedge.
+The Model Context Protocol, MCP, is part of the plumbing here. It's an open standard Anthropic shipped in late 2024. It gives AI agents a structured way to pull in external context at inference time, rather than forcing developers to paste walls of text into a chat window and hope for the best. The protocol itself is table stakes now. The interesting work is what you build on top of it.
 
-The competitive landscape in AI-assisted debugging is early and scattered. Sentry handles error monitoring. LinearB and similar tools track engineering metrics. But none of them are specifically threading bug reports, session context, and visual evidence directly into the AI agent's working memory at debug time. That specific combination is, at the moment, relatively uncrowded — which is either an opportunity or a sign that the demand isn't quite there yet.
+The broader market context is real, even if the specific numbers vary depending on which analyst you trust. Chrome extension market figures floating around range from $2.5B to $7.8B depending on scope and methodology. That spread is wide enough to be suspicious, so hold it loosely. But the directional story is consistent: extensions as a delivery layer for developer tooling are growing, and AI-augmented ones are growing faster. Chrome still holds somewhere north of 64% browser market share as of 2025, which makes Chrome-native distribution a reasonable go-to-market wedge.
+
+The competitive field in AI-assisted debugging is early and scattered. Sentry handles error monitoring. LinearB and similar tools track engineering metrics. None of them are specifically threading bug reports, session context, and visual evidence directly into an AI agent's working memory at debug time. That specific combination is, at the moment, relatively uncrowded. Whether that's an opportunity or a sign that demand isn't quite there yet is a fair question to sit with.
 
 ## The Micro: One Link, Full Context, No More Copy-Pasting
 
-Here's what BetterBugs MCP actually does, mechanically. A developer (or tester, or the founder who is also the QA team) captures a bug using the BetterBugs Chrome extension. That capture bundles together whatever the extension can grab: console logs, network requests, screenshots, screen recordings, annotations, the sequence of user actions leading up to the failure. It gets stored as a structured report with a shareable link.
+Here's what BetterBugs MCP actually does, mechanically. A developer, or tester, or the founder who is also the QA team, captures a bug using the BetterBugs Chrome extension. That capture bundles together whatever the extension can grab: console logs, network requests, screenshots, screen recordings, annotations, and the sequence of user actions leading up to the failure. It all gets stored as a structured report with a shareable link.
 
-The MCP piece is what happens next. Instead of copy-pasting logs into Claude or Cursor, you hand the AI agent the report link. The MCP server fetches the full context — logs, visual evidence, reproduction steps — and loads it into the model's context window. The AI now has something closer to what a senior engineer would want before they start debugging: not just the error message, but the whole crime scene.
+The MCP piece is what happens next.
+
+Instead of copy-pasting logs into Claude or Cursor, you hand the AI agent the report link. The MCP server fetches the full context, including logs, visual evidence, and reproduction steps, then loads it into the model's context window. The AI now has something closer to what a senior engineer would actually want before starting to debug. Not just the error message. The whole crime scene.
 
 The pitch is basically: stop explaining the bug to your AI. Let the AI read the bug.
 
-The team behind this — based in Ahmedabad, India — has background in QA tooling. Nishil P. is listed as CEO, with co-founders including Viral Patel (also co-founder at QAble.io). According to LinkedIn, BetterBugs has been running since April 2023, with the MCP server reportedly taking around six months to build. That's not a weekend hack.
+The team is based in Ahmedabad, India, with background in QA tooling. Nishil P. is listed as CEO, with co-founders including Viral Patel, who is also a co-founder at QAble.io. According to LinkedIn, BetterBugs has been running since April 2023, with the MCP server reportedly taking around six months to build. That's not a weekend hack.
 
-The Product Hunt numbers are worth noting: 314 upvotes and a #2 daily rank is a solid launch — not viral, but well above the noise floor. Forty-three comments suggests actual engagement rather than just vote-farming. The "vibe coding" tag on the PH listing is a deliberate positioning call — they're clearly targeting the wave of developers (and non-developers) who are shipping products with AI assistance and running into debugging friction fast.
+It got solid traction on launch day. The "vibe coding" tag on the listing is a deliberate positioning call. They're clearly targeting the wave of developers, and non-developers, who are shipping products with AI assistance and running into debugging friction fast.
 
-The Chrome extension as capture layer is smart because it works across any web app without instrumentation changes. The constraint is also obvious: this is web-only, browser-only. Mobile apps, backend services, and desktop software are outside the current blast radius.
+The Chrome extension as capture layer is smart because it works across any web app without instrumentation changes. The constraint is equally obvious. This is web-only, browser-only. Mobile apps, backend services, and desktop software are outside the current blast radius.
 
 ## The Verdict
 
-BetterBugs MCP is solving a real problem — the context gap between where bugs happen and where AI debugging happens — with a technically reasonable approach. The MCP integration is current, not retrograde. The capture-then-debug workflow makes sense. The team has been building in this space long enough to have actual opinions about it.
+BetterBugs MCP is solving a real problem. The context gap between where bugs happen and where AI debugging happens is genuinely annoying, and their approach to it is technically reasonable. The MCP integration is current, not retrograde. The capture-then-debug workflow makes sense. The team has been building in this space long enough to have actual opinions about it.
 
-What would make this work at 90 days: retention among the vibe-coding crowd who adopted it on launch day, and at least one credible integration story with a mainstream AI coding tool (Cursor feels like the obvious candidate). The testimonials on the site are from real companies (Saleshandy, Nevvon) which is a better signal than stock photos.
+I think this probably works well for solo developers and small teams who are building web products with AI-assisted workflows and don't have a dedicated QA function. That user has the most to gain from collapsing the distance between "bug happened" and "AI understood the bug." For larger engineering orgs with existing observability tooling already piped into their workflows, the value proposition gets thinner fast.
 
-What would make this stall: the web-only constraint is a genuine ceiling if their users start building beyond the browser. And the MCP ecosystem is moving fast — Anthropic, OpenAI, and half the agent framework teams are all publishing MCP servers right now. Standing out in that pile gets harder monthly.
+What would make this work at 90 days: retention among the vibe-coding crowd who adopted it early, and at least one credible integration story with a mainstream AI coding tool. Cursor feels like the obvious candidate. The testimonials on the site are from real companies, including Saleshandy and Nevvon, which is a better signal than stock photos.
 
-The thing we'd actually want to know: what does week-two retention look like after the PH bump fades? That number, more than anything else, would tell us whether this is a workflow people actually change — or a clever demo they try once and forget.
+What would make this stall is the web-only ceiling.
+
+If their users start building beyond the browser, which they will, the tool stops following them. And the MCP space is moving fast right now. Anthropic, OpenAI, and half the agent framework teams are all publishing MCP servers. Standing out in that pile gets harder every month.
+
+The number I'd actually want to know is week-two retention after the launch bump fades. That tells you whether this is a workflow people actually change, or a clever demo they try once and close.
