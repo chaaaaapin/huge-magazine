@@ -95,7 +95,7 @@ const mostPopular = [...allFeatures]
           <ul class="popular-list">
             {mostPopular.map(f => (
               <li class="popular-item">
-                <a href={`/feature/${f.slug}`} class="popular-link">
+                <a href={`/feature/${f.data.ph_slug}`} class="popular-link">
                   <img
                     src={f.data.logo}
                     alt={f.data.ph_slug}

@@ -814,7 +814,7 @@ def run_for_date(date_str: str, env: dict, dry_run: bool = False) -> list[Path]:
 
         # Per-article Slack notification
         if not dry_run and path.exists():
-            article_url = f"https://hugemagazine.com/feature/{date_str}-{post['slug']}"
+            article_url = f"https://hugemagazine.com/feature/{post['slug']}"
             notify_slack(
                 env,
                 f"📰 *HUGE Magazine* — New feature published\n"

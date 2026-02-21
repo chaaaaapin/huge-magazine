@@ -19,7 +19,7 @@ interface Props {
 }
 
 const { feature } = Astro.props;
-const { data, slug } = feature;
+const { data } = feature;
 ---
 
 <article class="hero-feature card">
@@ -44,7 +44,7 @@ const { data, slug } = feature;
 
     <div class="hero-content">
       <h2 class="hero-title">
-        <a href={`/feature/${slug}`}>{data.title}</a>
+        <a href={`/feature/${data.ph_slug}`}>{data.title}</a>
       </h2>
       <p class="hero-excerpt">{data.excerpt}</p>
     </div>
@@ -60,7 +60,7 @@ const { data, slug } = feature;
           })}
         </div>
       </div>
-      <a href={`/feature/${slug}`} class="read-link">
+      <a href={`/feature/${data.ph_slug}`} class="read-link">
         Read feature →
       </a>
     </div>

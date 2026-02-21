@@ -27,7 +27,7 @@ const marqueeItems = [...padded, ...padded];
     <div class="hof-strip" aria-hidden="true">
       <div class="hof-track">
         {marqueeItems.map((f) => (
-          <a href={`/feature/${f.slug}`} class="hof-icon-link" tabindex="-1" title={f.data.ph_slug}>
+          <a href={`/feature/${f.data.ph_slug}`} class="hof-icon-link" tabindex="-1" title={f.data.ph_slug}>
             <img
               src={f.data.logo}
               alt={f.data.ph_slug}

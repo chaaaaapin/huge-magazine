@@ -17,7 +17,7 @@ export async function GET(context) {
     items: features.map(f => ({
       title: f.data.title,
       description: f.data.excerpt,
-      link: `/feature/${f.slug}/`,
+      link: `/feature/${f.data.ph_slug}/`,
       pubDate: new Date(f.data.date + 'T12:00:00Z'),
     })),
     customData: '<language>en-us</language>',

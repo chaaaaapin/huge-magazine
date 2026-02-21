@@ -51,7 +51,7 @@ function formatDate(dateStr: string) {
             <span class="edition-products">
               {features.map((f, i) => (
                 <>
-                  <a href={`/feature/${f.slug}`} class="edition-product-link">
+                  <a href={`/feature/${f.data.ph_slug}`} class="edition-product-link">
                     #{f.data.ph_rank} {f.data.ph_slug}
                   </a>
                   {i < features.length - 1 && <span class="mid-dot">·</span>}

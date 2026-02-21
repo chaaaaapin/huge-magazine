@@ -1,0 +1,90 @@
+{
+  "$ref": "#/definitions/features",
+  "definitions": {
+    "features": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "ph_rank": {
+          "type": "number"
+        },
+        "ph_votes": {
+          "type": "number"
+        },
+        "ph_comments": {
+          "type": "number"
+        },
+        "ph_slug": {
+          "type": "string"
+        },
+        "ph_url": {
+          "type": "string"
+        },
+        "product_url": {
+          "type": "string"
+        },
+        "logo": {
+          "type": "string"
+        },
+        "hero_image": {
+          "type": "string"
+        },
+        "topics": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tagline": {
+          "type": "string"
+        },
+        "excerpt": {
+          "type": "string"
+        },
+        "edition": {
+          "type": "string"
+        },
+        "author": {
+          "type": "string"
+        },
+        "twitter_url": {
+          "type": "string"
+        },
+        "linkedin_url": {
+          "type": "string"
+        },
+        "github_url": {
+          "type": "string"
+        },
+        "app_type": {
+          "type": "string"
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "date",
+        "ph_rank",
+        "ph_votes",
+        "ph_comments",
+        "ph_slug",
+        "ph_url",
+        "product_url",
+        "logo",
+        "topics",
+        "tagline",
+        "excerpt",
+        "edition"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

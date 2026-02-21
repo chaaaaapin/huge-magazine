@@ -42,7 +42,7 @@ const items = shouldAnimate ? [...sorted, ...sorted] : sorted;
   <div class="hof-track-wrap">
     <div class={`hof-track ${shouldAnimate ? 'hof-track--animate' : ''}`}>
       {items.map((f) => (
-        <a href={`/feature/${f.slug}`} class="hof-item" title={`${f.data.ph_slug} — ${f.data.tagline}`}>
+        <a href={`/feature/${f.data.ph_slug}`} class="hof-item" title={`${f.data.ph_slug} — ${f.data.tagline}`}>
           <div class="hof-logo-wrap">
             <img
               src={f.data.logo}

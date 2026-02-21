@@ -5,7 +5,7 @@ import FeatureLayout from '../../layouts/FeatureLayout.astro';
 export async function getStaticPaths() {
   const features = await getCollection('features');
   return features.map(feature => ({
-    params: { slug: feature.slug },
+    params: { slug: feature.data.ph_slug },
     props: { feature },
   }));
 }
