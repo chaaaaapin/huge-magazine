@@ -3,350 +3,289 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import ArticleCard from '../components/ArticleCard.astro';
+import HeroFeature from '../components/HeroFeature.astro';
+import FeatureCard from '../components/FeatureCard.astro';
+import { topicCategorySlug } from '../lib/topicMap';
 
-// Get all articles
-const allBreakthroughs = await getCollection('breakthroughs');
-const allArticles = await getCollection('articles');
-const allOpinions = await getCollection('opinions');
-const allProfiles = await getCollection('profiles');
+const allFeatures = await getCollection('features');
 
-// Combine and sort by date
-const allPosts = [...allBreakthroughs, ...allArticles, ...allOpinions, ...allProfiles]
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+// Sort by date DESC, then ph_rank ASC within a date
+allFeatures.sort((a, b) => {
+  if (b.data.date !== a.data.date) return b.data.date.localeCompare(a.data.date);
+  return a.data.ph_rank - b.data.ph_rank;
+});
 
-const latestPosts = allPosts.slice(0, 10);
-const featuredPost = allPosts[0];
+// 15–18 most recent features for the main grid
+const recentFeatures = allFeatures.slice(0, 18);
+const hero = recentFeatures[0];
+const grid1 = recentFeatures.slice(1, 3);   // 2-up row
+const grid2 = recentFeatures.slice(3, 6);   // 3-up row
+const grid3 = recentFeatures.slice(6, 9);   // 3-up row
+const grid4 = recentFeatures.slice(9, 12);  // 3-up row
+const grid5 = recentFeatures.slice(12, 14); // 2-up row
+const grid6 = recentFeatures.slice(14, 18); // 4-up row (small)
 
-// Helper function to get category path
-function getCategoryPath(category: string): string {
-  return category.toLowerCase() + 's';
-}
+// Most popular: all features sorted by ph_votes DESC, top 8
+const mostPopular = [...allFeatures]
+  .sort((a, b) => b.data.ph_votes - a.data.ph_votes)
+  .slice(0, 8);
 ---
 
 <BaseLayout
-  title="HUGE Magazine"
-  description="Where Innovation Meets Impact. Breakthrough ideas, emerging technologies, and the innovations shaping tomorrow."
+  title="HUGE Magazine — startup features worth reading"
+  description="We write about new software companies and the people building them. Real opinions, no press releases."
 >
   <Header />
 
   <main>
-    <!-- Hero Section -->
-    <section class="hero">
-      <div class="container">
-        <div class="hero-content">
-          <h1 class="hero-title">Where Innovation Meets Impact</h1>
-          <p class="hero-description">
-            Breakthrough ideas, emerging technologies, and the innovations shaping tomorrow.
-            From AI and quantum computing to clean energy and biotech — we cover what's next before it's mainstream.
-          </p>
-        </div>
-      </div>
-    </section>
+    <div class="container">
 
-    <!-- Featured Article -->
-    {featuredPost && (
-      <section class="featured">
-        <div class="container">
-          <h2 class="section-title">Featured</h2>
-          <div class="featured-card">
-            <a href={`/${getCategoryPath(featuredPost.data.category)}/${featuredPost.slug}/`} class="featured-link">
-              {featuredPost.data.image && (
-                <div class="featured-image">
-                  <img src={featuredPost.data.image} alt={featuredPost.data.title} />
-                </div>
-              )}
-              <div class="featured-content">
-                <span class="featured-category">{featuredPost.data.category}</span>
-                <h3 class="featured-title">{featuredPost.data.title}</h3>
-                <p class="featured-description">{featuredPost.data.description}</p>
-              </div>
-            </a>
-          </div>
-        </div>
-      </section>
-    )}
-
-    <!-- Latest Articles -->
-    <section class="latest">
-      <div class="container">
-        <h2 class="section-title">Latest</h2>
-        <div class="articles-grid">
-          {latestPosts.slice(1).map((post) => (
-            <ArticleCard
-              title={post.data.title}
-              description={post.data.description}
-              pubDate={post.data.pubDate}
-              image={post.data.image}
-              href={`/${getCategoryPath(post.data.category)}/${post.slug}/`}
-              category={post.data.category}
-            />
-          ))}
-        </div>
+      <!-- About blurb -->
+      <div class="about-blurb">
+        <p class="blurb-text">
+          Every day we pick a handful of new products, actually look at them, and write honestly about what's interesting and what's not.
+          No PR, no placements, no affiliate deals. Just our writers and their real opinions.
+        </p>
       </div>
-    </section>
 
-    <!-- Newsletter CTA -->
-    <section class="newsletter-cta">
-      <div class="container">
-        <div class="cta-content">
-          <h2>Stay Ahead of Tomorrow</h2>
-          <p>Get breakthrough ideas delivered weekly. No spam, just innovation.</p>
-          <form class="newsletter-form">
-            <input type="email" placeholder="Enter your email" required />
-            <button type="submit">Subscribe</button>
-          </form>
+      <hr class="divider" />
+
+      <!-- Hero -->
+      {hero && <HeroFeature feature={hero} />}
+
+      <!-- 2-up -->
+      {grid1.length > 0 && (
+        <div class="grid-2">
+          {grid1.map(f => <FeatureCard feature={f} />)}
         </div>
+      )}
+
+      <!-- 3-up -->
+      {grid2.length > 0 && (
+        <div class="grid-3">
+          {grid2.map(f => <FeatureCard feature={f} />)}
+        </div>
+      )}
+
+      <!-- 3-up -->
+      {grid3.length > 0 && (
+        <div class="grid-3">
+          {grid3.map(f => <FeatureCard feature={f} />)}
+        </div>
+      )}
+
+      <!-- Most popular sidebar widget -->
+      <div class="popular-section">
+        <div class="grid-main-col">
+          <!-- 3-up continues -->
+          {grid4.length > 0 && (
+            <div class="grid-3">
+              {grid4.map(f => <FeatureCard feature={f} />)}
+            </div>
+          )}
+          {grid5.length > 0 && (
+            <div class="grid-2">
+              {grid5.map(f => <FeatureCard feature={f} />)}
+            </div>
+          )}
+        </div>
+
+        <aside class="popular-widget">
+          <h2 class="popular-label">Most popular</h2>
+          <ul class="popular-list">
+            {mostPopular.map(f => (
+              <li class="popular-item">
+                <a href={`/feature/${f.slug}`} class="popular-link">
+                  <img
+                    src={f.data.logo}
+                    alt={f.data.ph_slug}
+                    width="36"
+                    height="36"
+                    class="popular-logo"
+                    loading="lazy"
+                  />
+                  <div class="popular-meta">
+                    <span class="popular-name">{f.data.ph_slug}</span>
+                    <span class="popular-tagline">{f.data.tagline}</span>
+                  </div>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </aside>
       </div>
-    </section>
+
+      <!-- Final 4-up row -->
+      {grid6.length > 0 && (
+        <div class="grid-4">
+          {grid6.map(f => <FeatureCard feature={f} />)}
+        </div>
+      )}
+
+    </div>
   </main>
 
   <Footer />
 </BaseLayout>
 
 <style>
-  /* Hero */
-  .hero {
-    background: linear-gradient(135deg, rgba(0, 102, 255, 0.08) 0%, rgba(91, 33, 182, 0.08) 100%);
-    padding: var(--space-2xl) 0 calc(var(--space-2xl) + 1rem);
-    position: relative;
-    overflow: hidden;
+  /* ── About blurb ── */
+  .about-blurb {
+    padding: 2rem 0 1rem;
+    max-width: 640px;
   }
 
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -10%;
-    width: 60%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(0, 102, 255, 0.1) 0%, transparent 70%);
-    pointer-events: none;
+  .blurb-text {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--text-secondary);
   }
 
-  .hero-content {
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
-    position: relative;
-    z-index: 1;
-  }
-
-  .hero-title {
-    font-size: 4.5rem;
-    font-weight: 900;
-    letter-spacing: -0.04em;
-    line-height: 1;
-    margin-bottom: var(--space-lg);
-    background: linear-gradient(135deg, var(--color-electric-blue) 0%, var(--color-deep-purple) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-shadow: 0 4px 12px rgba(0, 102, 255, 0.1);
-  }
-
-  .hero-description {
-    font-size: 1.4rem;
-    line-height: 1.6;
-    color: rgba(13, 13, 13, 0.75);
-    max-width: 700px;
-    margin: 0 auto;
-    font-weight: 400;
-  }
-
-  /* Section Title */
-  .section-title {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: var(--space-lg);
-    color: var(--color-huge-black);
-  }
-
-  /* Featured */
-  .featured {
-    padding: var(--space-2xl) 0;
-    background: var(--color-huge-white);
-  }
-
-  .featured-card {
-    background: var(--color-huge-white);
-    border: 2px solid rgba(13, 13, 13, 0.1);
-    border-radius: 16px;
-    overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 12px rgba(13, 13, 13, 0.05);
-  }
-
-  .featured-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 24px 48px rgba(13, 13, 13, 0.2);
-    border-color: var(--color-electric-blue);
-  }
-
-  .featured-link {
+  /* ── Grids ── */
+  .grid-2 {
     display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    text-decoration: none;
-    color: inherit;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    margin-top: 1.25rem;
   }
 
-  .featured-image {
-    aspect-ratio: 16 / 9;
-    overflow: hidden;
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin-top: 1.25rem;
   }
 
-  .featured-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.4s ease;
+  .grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-top: 1.25rem;
+    margin-bottom: 3rem;
   }
 
-  .featured-card:hover .featured-image img {
-    transform: scale(1.08);
+  /* ── Popular section layout ── */
+  .popular-section {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 2rem;
+    align-items: start;
+    margin-top: 1.25rem;
   }
 
-  .featured-content {
-    padding: var(--space-xl);
+  .grid-main-col {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    gap: 0;
   }
 
-  .featured-category {
-    display: inline-block;
-    font-size: 0.75rem;
+  /* ── Popular widget ── */
+  .popular-widget {
+    position: sticky;
+    top: 90px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    background: #fff;
+    padding: 1.25rem;
+  }
+
+  .popular-label {
+    font-size: 0.65rem;
     font-weight: 700;
-    padding: 0.35rem 1rem;
-    border-radius: 24px;
-    background: linear-gradient(135deg, var(--color-electric-blue), var(--color-cyan));
-    color: white;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: var(--space-md);
+    color: var(--accent);
+    margin-bottom: 1rem;
   }
 
-  .featured-title {
-    font-size: 2.75rem;
-    font-weight: 900;
-    line-height: 1.15;
-    margin-bottom: var(--space-md);
-    color: var(--color-huge-black);
-    letter-spacing: -0.03em;
-  }
-
-  .featured-description {
-    font-size: 1.2rem;
-    line-height: 1.6;
-    color: rgba(13, 13, 13, 0.7);
-  }
-
-  /* Latest Articles */
-  .latest {
-    padding: var(--space-2xl) 0;
-    background: rgba(0, 102, 255, 0.02);
-  }
-
-  .articles-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: var(--space-lg);
-  }
-
-  /* Newsletter CTA */
-  .newsletter-cta {
-    padding: var(--space-2xl) 0;
-    background: var(--color-huge-black);
-    color: var(--color-huge-white);
-  }
-
-  .cta-content {
-    max-width: 600px;
-    margin: 0 auto;
-    text-align: center;
-  }
-
-  .cta-content h2 {
-    font-size: 2.5rem;
-    font-weight: 800;
-    margin-bottom: var(--space-sm);
-  }
-
-  .cta-content p {
-    font-size: 1.15rem;
-    color: rgba(250, 250, 250, 0.8);
-    margin-bottom: var(--space-lg);
-  }
-
-  .newsletter-form {
+  .popular-list {
+    list-style: none;
     display: flex;
-    gap: var(--space-sm);
+    flex-direction: column;
+    gap: 0;
   }
 
-  .newsletter-form input {
-    flex: 1;
-    padding: var(--space-sm) var(--space-md);
-    border: 2px solid rgba(250, 250, 250, 0.2);
-    background: rgba(250, 250, 250, 0.05);
-    color: var(--color-huge-white);
-    font-size: 1rem;
-    border-radius: 6px;
-    outline: none;
-    transition: border-color 0.2s ease;
+  .popular-item {
+    border-bottom: 1px solid var(--border);
   }
 
-  .newsletter-form input:focus {
-    border-color: var(--color-electric-blue);
+  .popular-item:last-child {
+    border-bottom: none;
   }
 
-  .newsletter-form input::placeholder {
-    color: rgba(250, 250, 250, 0.5);
+  .popular-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 0;
+    text-decoration: none;
+    transition: opacity 0.15s;
   }
 
-  .newsletter-form button {
-    padding: var(--space-sm) var(--space-lg);
-    background: var(--color-electric-blue);
-    color: var(--color-huge-white);
-    border: none;
-    font-size: 1rem;
-    font-weight: 600;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background 0.2s ease;
+  .popular-link:hover {
+    opacity: 0.75;
   }
 
-  .newsletter-form button:hover {
-    background: var(--color-innovation-orange);
+  .popular-logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    flex-shrink: 0;
   }
 
-  /* Responsive */
-  @media (max-width: 768px) {
-    .hero-title {
-      font-size: 2.5rem;
-    }
+  .popular-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+  }
 
-    .hero-description {
-      font-size: 1.1rem;
-    }
+  .popular-name {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
-    .featured-link {
+  .popular-tagline {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 900px) {
+    .popular-section {
       grid-template-columns: 1fr;
     }
 
-    .featured-title {
-      font-size: 1.75rem;
+    .popular-widget {
+      position: static;
+      order: -1;
     }
 
-    .articles-grid {
+    .grid-3 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid-4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .grid-2,
+    .grid-3,
+    .grid-4 {
       grid-template-columns: 1fr;
-    }
-
-    .newsletter-form {
-      flex-direction: column;
-    }
-
-    .cta-content h2 {
-      font-size: 1.75rem;
     }
   }
 </style>

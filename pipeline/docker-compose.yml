@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  huge-publisher:
+    build:
+      context: ..
+      dockerfile: pipeline/Dockerfile
+    container_name: huge-publisher
+    restart: unless-stopped
+    environment:
+      - PH_API_KEY=${PH_API_KEY}
+      - PH_API_SECRET=${PH_API_SECRET}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - FIRECRAWL_API_KEY=${FIRECRAWL_API_KEY}
+      - SERPAPI_API_KEY=${SERPAPI_API_KEY}
+      - CLOUDFLARE_API_TOKEN=${CLOUDFLARE_API_TOKEN}
+      - CLOUDFLARE_ACCOUNT_ID=cfbd11e81c96d54bef282a610b58b778
+      - SLACK_WEBHOOK_SYSTEM=${SLACK_WEBHOOK_SYSTEM}
+    volumes:
+      - ../site/src/content/features:/app/site/src/content/features
+      - git-ssh:/root/.ssh
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  git-ssh:

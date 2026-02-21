@@ -1,0 +1,175 @@
+---
+import { topicCategorySlug } from '../lib/topicMap';
+
+interface Props {
+  feature: {
+    slug: string;
+    data: {
+      title: string;
+      ph_rank: number;
+      ph_votes: number;
+      ph_comments: number;
+      logo: string;
+      ph_slug: string;
+      tagline: string;
+      excerpt: string;
+      topics: string[];
+    };
+  };
+}
+
+const { feature } = Astro.props;
+const { data, slug } = feature;
+---
+
+<article class="hero-feature card">
+  <div class="hero-accent-bar"></div>
+  <div class="hero-body">
+    <div class="hero-product-row">
+      <div class="hero-logo-wrap">
+        <img
+          src={data.logo}
+          alt={data.ph_slug}
+          width="72"
+          height="72"
+          class="hero-logo"
+          loading="eager"
+        />
+      </div>
+      <div class="hero-product-info">
+        <p class="hero-product-name">{data.ph_slug}</p>
+        <p class="hero-product-tagline">{data.tagline}</p>
+      </div>
+    </div>
+
+    <div class="hero-content">
+      <h2 class="hero-title">
+        <a href={`/feature/${slug}`}>{data.title}</a>
+      </h2>
+      <p class="hero-excerpt">{data.excerpt}</p>
+    </div>
+
+    <div class="hero-footer">
+      <div class="hero-meta">
+        <div class="tags">
+          {data.topics.slice(0, 3).map(t => {
+            const cat = topicCategorySlug(t);
+            return cat
+              ? <a href={`/category/${cat}`} class="tag tag-link">{t}</a>
+              : <span class="tag">{t}</span>;
+          })}
+        </div>
+      </div>
+      <a href={`/feature/${slug}`} class="read-link">
+        Read feature →
+      </a>
+    </div>
+  </div>
+</article>
+
+<style>
+  .hero-feature {
+    position: relative;
+    margin-bottom: 2rem;
+  }
+
+  .hero-accent-bar {
+    height: 4px;
+    background: var(--accent);
+    border-radius: var(--radius-card) var(--radius-card) 0 0;
+  }
+
+  .hero-body {
+    padding: 1.75rem 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .hero-product-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .hero-logo-wrap {
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .hero-logo {
+    width: 72px;
+    height: 72px;
+    border-radius: 14px;
+    object-fit: cover;
+    border: 1px solid var(--border);
+  }
+
+  .hero-product-name {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 0.2rem;
+  }
+
+  .hero-product-tagline {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+
+  .hero-title {
+    font-size: clamp(1.4rem, 3vw, 1.85rem);
+    font-weight: 900;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .hero-title a {
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .hero-title a:hover {
+    color: var(--accent);
+  }
+
+  .hero-excerpt {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .hero-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  @media (max-width: 768px) {
+    .hero-body {
+      padding: 1.25rem 1.25rem 1rem;
+    }
+
+    .hero-footer {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

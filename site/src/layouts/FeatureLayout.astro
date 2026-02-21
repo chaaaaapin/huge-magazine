@@ -1,0 +1,543 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  frontmatter: {
+    title: string;
+    date: string;
+    ph_rank: number;
+    ph_votes: number;
+    ph_comments: number;
+    ph_slug: string;
+    ph_url: string;
+    product_url: string;
+    logo: string;
+    hero_image?: string;
+    topics: string[];
+    tagline: string;
+    excerpt: string;
+    edition: string;
+    author?: string;
+    twitter_url?: string;
+    linkedin_url?: string;
+    github_url?: string;
+    app_type?: string;
+  };
+  slug?: string;
+}
+
+const { frontmatter } = Astro.props;
+
+// Format date for display
+const dateObj = new Date(frontmatter.date + 'T12:00:00Z');
+const displayDate = dateObj.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  timeZone: 'UTC',
+});
+
+// Derive slug from URL
+const pageSlug = Astro.url.pathname.replace('/feature/', '').replace(/\/$/, '');
+
+// Map PH topic names → category page slugs
+const TOPIC_TO_CATEGORY: Record<string, string> = {
+  'Artificial Intelligence': 'artificial-intelligence',
+  'AI': 'artificial-intelligence',
+  'Machine Learning': 'artificial-intelligence',
+  'Developer Tools': 'developer-tools',
+  'Dev Tools': 'developer-tools',
+  'GitHub': 'developer-tools',
+  'Open Source': 'open-source',
+  'Productivity': 'productivity',
+  'Marketing': 'marketing',
+  'Growth Hacking': 'marketing',
+  'SEO': 'marketing',
+  'Sales': 'sales',
+  'CRM': 'sales',
+  'Customer Success': 'saas',
+  'SaaS': 'saas',
+  'B2B': 'saas',
+  'Analytics': 'analytics',
+  'Finance': 'finance',
+  'Fintech': 'finance',
+  'Crypto': 'web3',
+  'Web3': 'web3',
+  'Blockchain': 'web3',
+  'Health': 'health-wellness',
+  'Wellness': 'health-wellness',
+  'Fitness': 'health-wellness',
+  'Education': 'education',
+  'Learning': 'education',
+  'No-code': 'no-code',
+  'No Code': 'no-code',
+  'Mobile': 'mobile',
+  'iOS': 'mobile',
+  'Android': 'mobile',
+  'Chrome Extensions': 'browser-extensions',
+  'Browser Extensions': 'browser-extensions',
+  'Security': 'security',
+  'Privacy': 'security',
+  'Social': 'social',
+  'Community': 'social',
+  'E-commerce': 'ecommerce',
+  'Ecommerce': 'ecommerce',
+  'Infrastructure': 'infrastructure',
+  'DevOps': 'infrastructure',
+  'Design': 'design-tools',
+  'Design Tools': 'design-tools',
+  'UI': 'design-tools',
+  'UX': 'design-tools',
+};
+
+function topicSlug(topic: string): string | null {
+  return TOPIC_TO_CATEGORY[topic] ?? null;
+}
+
+// Author name from slug
+function authorName(slug: string | undefined): string {
+  if (!slug) return 'HUGE Magazine';
+  return slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+}
+
+const authorSlug = frontmatter.author;
+const authorDisplayName = authorName(authorSlug);
+
+// Derive applicationCategory from topics
+function getAppCategory(topics: string[]): string {
+  const t = topics.join(' ').toLowerCase();
+  if (t.includes('game')) return 'GameApplication';
+  if (t.includes('developer') || t.includes('dev tool')) return 'DeveloperApplication';
+  if (t.includes('design')) return 'DesignApplication';
+  if (t.includes('education') || t.includes('learning')) return 'EducationApplication';
+  if (t.includes('finance') || t.includes('fintech')) return 'FinanceApplication';
+  if (t.includes('health') || t.includes('medical')) return 'HealthApplication';
+  if (t.includes('entertainment') || t.includes('video')) return 'EntertainmentApplication';
+  if (t.includes('photo') || t.includes('music') || t.includes('audio')) return 'MultimediaApplication';
+  if (t.includes('mobile') || t.includes('ios') || t.includes('android')) return 'MobileApplication';
+  return 'BusinessApplication';
+}
+
+const appCategory = getAppCategory(frontmatter.topics);
+
+const sameAs = [
+  frontmatter.product_url,
+  frontmatter.ph_url,
+  frontmatter.twitter_url,
+  frontmatter.linkedin_url,
+  frontmatter.github_url,
+].filter(Boolean);
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Review",
+      "@id": `https://hugemagazine.com/feature/${pageSlug}#review`,
+      "headline": frontmatter.title,
+      "description": frontmatter.excerpt,
+      "datePublished": frontmatter.date,
+      "url": `https://hugemagazine.com/feature/${pageSlug}`,
+      "author": authorSlug ? {
+        "@type": "Person",
+        "name": authorDisplayName,
+        "url": `https://hugemagazine.com/author/${authorSlug}`
+      } : {
+        "@type": "Organization",
+        "name": "HUGE Magazine",
+        "url": "https://hugemagazine.com"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "HUGE Magazine",
+        "url": "https://hugemagazine.com"
+      },
+      "itemReviewed": {
+        "@type": "SoftwareApplication",
+        "@id": `${frontmatter.product_url}#software`,
+        "name": frontmatter.ph_slug,
+        "description": frontmatter.tagline,
+        "url": frontmatter.product_url,
+        "applicationCategory": appCategory,
+        "operatingSystem": "Web",
+        "sameAs": sameAs
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "HUGE Magazine", "item": "https://hugemagazine.com"},
+        {"@type": "ListItem", "position": 2, "name": `${displayDate} Edition`, "item": `https://hugemagazine.com/daily/${frontmatter.date}`},
+        {"@type": "ListItem", "position": 3, "name": frontmatter.title, "item": `https://hugemagazine.com/feature/${pageSlug}`}
+      ]
+    }
+  ]
+};
+---
+
+<BaseLayout
+  title={frontmatter.title}
+  description={frontmatter.excerpt}
+  image={frontmatter.hero_image ?? frontmatter.logo}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </Fragment>
+
+  <Header />
+
+  <main>
+    <!-- Feature Header -->
+    <div class="feature-header">
+      <div class="container">
+        <!-- Back link -->
+        <a href={`/daily/${frontmatter.date}`} class="back-link">
+          ← {displayDate} edition
+        </a>
+
+        <div class="feature-meta">
+          <!-- Product Logo (no rank badge) -->
+          <div class="product-identity">
+            <div class="logo-wrap">
+              <img
+                src={frontmatter.logo}
+                alt={frontmatter.ph_slug}
+                width="80"
+                height="80"
+                class="product-logo"
+              />
+            </div>
+            <div class="product-info">
+              <p class="product-name">{frontmatter.ph_slug}</p>
+              <p class="product-tagline">{frontmatter.tagline}</p>
+            </div>
+          </div>
+
+          <!-- Title -->
+          <h1 class="feature-title">{frontmatter.title}</h1>
+
+          <!-- Author byline -->
+          {authorSlug && (
+            <p class="author-byline">
+              By <a href={`/author/${authorSlug}`} class="author-link">{authorDisplayName}</a>
+            </p>
+          )}
+
+          <!-- Tags row — linked to category pages where mapping exists -->
+          <div class="feature-tags-row">
+            <div class="tags">
+              {frontmatter.topics.map(t => {
+                const catSlug = topicSlug(t);
+                return catSlug
+                  ? <a href={`/category/${catSlug}`} class="tag tag-link">{t}</a>
+                  : <span class="tag">{t}</span>;
+              })}
+            </div>
+          </div>
+
+          <!-- Top link cluster -->
+          <div class="link-cluster">
+            <a href={frontmatter.product_url} target="_blank" rel="noopener" class="btn-primary">
+              Visit Official Site →
+            </a>
+            <div class="social-buttons">
+              <!-- Product Hunt -->
+              <a href={frontmatter.ph_url} target="_blank" rel="noopener" class="social-btn" aria-label="View on Product Hunt">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 4.5c4.142 0 7.5 3.358 7.5 7.5s-3.358 7.5-7.5 7.5S4.5 16.142 4.5 12 7.858 4.5 12 4.5zm-1.5 4.5v6h1.5v-2.25H13c1.243 0 2.25-1.007 2.25-2.25S14.243 9 13 9h-2.5zm1.5 1.5H13c.414 0 .75.336.75.75S13.414 11.25 13 11.25h-1.5V10z"/></svg>
+              </a>
+              <!-- Twitter/X -->
+              {frontmatter.twitter_url && (
+                <a href={frontmatter.twitter_url} target="_blank" rel="noopener" class="social-btn" aria-label="Twitter/X">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>
+              )}
+              <!-- LinkedIn -->
+              {frontmatter.linkedin_url && (
+                <a href={frontmatter.linkedin_url} target="_blank" rel="noopener" class="social-btn" aria-label="LinkedIn">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                </a>
+              )}
+              <!-- GitHub -->
+              {frontmatter.github_url && (
+                <a href={frontmatter.github_url} target="_blank" rel="noopener" class="social-btn" aria-label="GitHub">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero Image (full bleed) -->
+    {frontmatter.hero_image && (
+      <div class="hero-image-wrap">
+        <img
+          src={frontmatter.hero_image}
+          alt={frontmatter.title}
+          class="hero-image"
+          loading="lazy"
+        />
+      </div>
+    )}
+
+    <!-- Article Body -->
+    <div class="container">
+      <div class="feature-body">
+        <div class="prose">
+          <slot />
+        </div>
+      </div>
+
+      <!-- Bottom link cluster -->
+      <div class="feature-bottom-links">
+        <div class="link-cluster">
+          <a href={frontmatter.product_url} target="_blank" rel="noopener" class="btn-primary">
+            Visit Official Site →
+          </a>
+          <div class="social-buttons">
+            <a href={frontmatter.ph_url} target="_blank" rel="noopener" class="social-btn" aria-label="View on Product Hunt">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 4.5c4.142 0 7.5 3.358 7.5 7.5s-3.358 7.5-7.5 7.5S4.5 16.142 4.5 12 7.858 4.5 12 4.5zm-1.5 4.5v6h1.5v-2.25H13c1.243 0 2.25-1.007 2.25-2.25S14.243 9 13 9h-2.5zm1.5 1.5H13c.414 0 .75.336.75.75S13.414 11.25 13 11.25h-1.5V10z"/></svg>
+            </a>
+            {frontmatter.twitter_url && (
+              <a href={frontmatter.twitter_url} target="_blank" rel="noopener" class="social-btn" aria-label="Twitter/X">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              </a>
+            )}
+            {frontmatter.linkedin_url && (
+              <a href={frontmatter.linkedin_url} target="_blank" rel="noopener" class="social-btn" aria-label="LinkedIn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              </a>
+            )}
+            {frontmatter.github_url && (
+              <a href={frontmatter.github_url} target="_blank" rel="noopener" class="social-btn" aria-label="GitHub">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <!-- Back link bottom -->
+      <div class="feature-back-bottom">
+        <a href={`/daily/${frontmatter.date}`} class="back-link">
+          ← Back to {displayDate} edition
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .feature-header {
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 2.5rem 0 2rem;
+  }
+
+  .back-link {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    letter-spacing: 0.02em;
+    margin-bottom: 1.75rem;
+    transition: color 0.15s;
+    text-decoration: none;
+  }
+
+  .back-link:hover {
+    color: var(--accent);
+  }
+
+  .feature-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .product-identity {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .logo-wrap {
+    flex-shrink: 0;
+  }
+
+  .product-logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 16px;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    display: block;
+  }
+
+  .product-name {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 0.2rem;
+  }
+
+  .product-tagline {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+
+  .feature-title {
+    font-size: clamp(1.7rem, 4vw, 2.6rem);
+    font-weight: 900;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    color: var(--text-primary);
+    max-width: 780px;
+    margin: 0;
+  }
+
+  .author-byline {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  .author-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    transition: opacity 0.15s;
+  }
+
+  .author-link:hover {
+    opacity: 0.8;
+  }
+
+  .feature-tags-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  /* Tag links */
+  .tag-link {
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .tag-link:hover {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  /* ── Link cluster ── */
+  .link-cluster {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin-top: 0.25rem;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.6rem 1.2rem;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.88rem;
+    font-weight: 700;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: opacity 0.15s;
+    white-space: nowrap;
+  }
+
+  .btn-primary:hover {
+    opacity: 0.88;
+  }
+
+  .social-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .social-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: border-color 0.15s, color 0.15s;
+    flex-shrink: 0;
+  }
+
+  .social-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ── Hero image ── */
+  .hero-image-wrap {
+    width: 100%;
+    max-height: 480px;
+    overflow: hidden;
+    margin-bottom: 0;
+  }
+
+  .hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* ── Article body ── */
+  .feature-body {
+    max-width: 720px;
+    margin: 3rem auto 0;
+  }
+
+  .feature-bottom-links {
+    max-width: 720px;
+    margin: 2.5rem auto 0;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .feature-back-bottom {
+    max-width: 720px;
+    margin: 1.5rem auto 4rem;
+  }
+
+  @media (max-width: 768px) {
+    .feature-header {
+      padding: 1.75rem 0 1.5rem;
+    }
+
+    .product-logo {
+      width: 60px;
+      height: 60px;
+    }
+
+    .link-cluster {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+  }
+</style>
