@@ -763,10 +763,29 @@ def run_for_date(date_str: str, env: dict, dry_run: bool = False) -> list[Path]:
     selected = pick_random_3(all_posts)
     log.info(f"Selected: {[p['name'] for p in selected]}")
 
-    # Assign authors randomly (no repeats within a date if possible)
+    # Assign authors — Danny never covers AI products
+    AI_TOPICS = {"artificial intelligence", "ai", "machine learning", "deep learning"}
+
+    def eligible_authors(post: dict) -> list:
+        post_topics = {
+            e["node"]["name"].lower()
+            for e in post.get("topics", {}).get("edges", [])
+        }
+        is_ai = bool(post_topics & AI_TOPICS)
+        return [a for a in AUTHORS if not (is_ai and a["slug"] == "danny-kowalski")]
+
     author_pool = AUTHORS.copy()
     random.shuffle(author_pool)
-    assigned_authors = [author_pool[i % len(author_pool)] for i in range(len(selected))]
+    assigned_authors = []
+    used_slugs: list[str] = []
+    for post in selected:
+        eligible = eligible_authors(post)
+        # Prefer authors not yet used this batch; fall back if all used
+        unused = [a for a in eligible if a["slug"] not in used_slugs]
+        pool = unused if unused else eligible
+        chosen = random.choice(pool)
+        assigned_authors.append(chosen)
+        used_slugs.append(chosen["slug"])
 
     written = []
 

@@ -134,12 +134,19 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "Review",
-      "@id": `https://hugemagazine.com/feature/${pageSlug}#review`,
+      "@type": "NewsArticle",
+      "@id": `https://hugemagazine.com/feature/${pageSlug}`,
       "headline": frontmatter.title,
       "description": frontmatter.excerpt,
-      "datePublished": frontmatter.date,
+      "datePublished": `${frontmatter.date}T12:00:00Z`,
+      "dateModified": `${frontmatter.date}T12:00:00Z`,
       "url": `https://hugemagazine.com/feature/${pageSlug}`,
+      "image": {
+        "@type": "ImageObject",
+        "url": frontmatter.hero_image ?? frontmatter.logo,
+        "width": 1200,
+        "height": 630
+      },
       "author": authorSlug ? {
         "@type": "Person",
         "name": authorDisplayName,
@@ -152,9 +159,19 @@ const jsonLd = {
       "publisher": {
         "@type": "Organization",
         "name": "HUGE Magazine",
-        "url": "https://hugemagazine.com"
+        "url": "https://hugemagazine.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://hugemagazine.com/logo.png",
+          "width": 600,
+          "height": 60
+        }
       },
-      "itemReviewed": {
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": `https://hugemagazine.com/feature/${pageSlug}`
+      },
+      "about": {
         "@type": "SoftwareApplication",
         "@id": `${frontmatter.product_url}#software`,
         "name": frontmatter.ph_slug,
@@ -163,7 +180,9 @@ const jsonLd = {
         "applicationCategory": appCategory,
         "operatingSystem": "Web",
         "sameAs": sameAs
-      }
+      },
+      "articleSection": frontmatter.topics?.[0] ?? "Technology",
+      "keywords": frontmatter.topics?.join(', ')
     },
     {
       "@type": "BreadcrumbList",
@@ -187,6 +206,12 @@ const jsonLd = {
 >
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="article:section" content={frontmatter.topics?.[0] ?? 'Technology'} />
+    {frontmatter.topics?.slice(1).map(t => <meta property="article:tag" content={t} />)}
+    {(frontmatter.hero_image ?? frontmatter.logo) && (
+      <link rel="preload" as="image" href={frontmatter.hero_image ?? frontmatter.logo} />
+    )}
   </Fragment>
 
   <Header />
@@ -281,7 +306,8 @@ const jsonLd = {
           src={frontmatter.hero_image}
           alt={frontmatter.title}
           class="hero-image"
-          loading="lazy"
+          loading="eager"
+          fetchpriority="high"
         />
       </div>
     )}
