@@ -1,0 +1,49 @@
+---
+title: "Your Spreadsheet Is Not a Database — Sheetful Wants You to Pretend Anyway"
+date: "2026-02-04"
+ph_rank: 6
+ph_votes: 152
+ph_comments: 5
+ph_slug: "sheetful-2"
+ph_url: "https://www.producthunt.com/products/sheetful-co/launches/sheetful-2?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+tdc-io2+%28ID%3A+275675%29"
+product_url: "https://www.producthunt.com/r/4NSSF4M32T672R?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+tdc-io2+%28ID%3A+275675%29"
+logo: "https://ph-files.imgix.net/78eed700-3a28-4cb9-8ac9-8c46a028bade.png?auto=format"
+hero_image: "https://ph-files.imgix.net/5dea21c8-6ca6-4ba5-be02-24db8c718283.png?auto=format"
+topics:
+  - "API"
+  - "Spreadsheets"
+  - "Developer Tools"
+tagline: "Build robust REST APIs with Google Sheets for free"
+excerpt: "Turning Google Sheets into a REST API isn't a new idea, but Sheetful is betting there's still a real market for doing it cleanly and for free."
+edition: "2026-02-04"
+author: "danny-kowalski"
+app_type: "WebApplication"
+---
+
+## The Macro: Everyone Wants a Backend Until They Have to Build One
+
+Here's the thing about the no-code backend space: it's crowded in the same way a highway is crowded — a lot of vehicles, different speeds, and everyone's quietly convinced they're in the right lane. Tools like Airtable, Baserow, and Supabase have spent years arguing over who gets to be the spreadsheet-shaped database for non-engineers. Meanwhile, Google Sheets — free, already open in 400 million browser tabs, already containing half the world's informal business data — keeps getting treated as a read-only artifact rather than a live data source.
+
+The specific niche Sheetful is targeting — Sheets-to-REST-API — has predecessors. Sheety has been doing this for years. API Spreadsheets exists. There's a whole graveyard of side projects that tried to solve this and either pivoted or quietly stopped responding to support emails. Which, look, that's not a knock on Sheetful — it's context. The question has never really been whether you *can* turn a spreadsheet into an API. It's whether enough people want to do it reliably and repeatedly that it becomes a sustainable product category rather than a weekend hack.
+
+The timing argument is actually decent. AI-assisted development has created a new class of builder: technically literate enough to consume an API, not quite ready to provision a Postgres instance. Vibe-coded apps need backends. Those backends need data. That data already lives in Google Sheets because someone put it there in 2021 and it never moved. If Sheetful can catch that builder — the person who knows what a GET request is but doesn't want to write a Flask app to serve one — there's a real, if modest, addressable market here. Not a pharmaceutical API market (though the research bot apparently got confused about that — those are a different kind of API entirely, worth north of $136 billion and completely irrelevant here). A small, real one.
+
+## The Micro: What It Actually Does, Without the Landing Page Enthusiasm
+
+Sheetful's core mechanic is genuinely simple, which is mostly a compliment. You connect a Google Sheet, and Sheetful generates REST endpoints — GET, POST, PUT, DELETE — that map to that sheet's rows. Your sheet becomes a table. Your columns become fields. The API updates in real-time when the sheet changes, which matters more than it sounds: no cache invalidation headaches, no manual sync triggers, no webhook plumbing.
+
+The dashboard reportedly includes live endpoint testing — so you can poke at your API from inside the product without reaching for Postman — and real-time analytics on request volume. That's a reasonable feature set for a v1. It's not opinionated about authentication in ways that are obvious from the outside, which is a thing worth poking at before putting anything sensitive through it.
+
+The numbers from the product website: 100+ developers, 250+ APIs built, 500k+ requests served. These are small numbers stated with confidence, which is either refreshing honesty or a sign that this is genuinely early-stage — probably both. On Product Hunt, the launch pulled 152 upvotes and a #6 daily rank, with only 5 comments. The vote count is respectable for a utility tool without a viral hook. The comment count is low enough to suggest the launch didn't spark much debate — either because the concept is self-explanatory or because the audience who'd care most (developers with a specific Sheets problem) didn't show up in force.
+
+Free tier exists, paid plans are available, no credit card required to start. That's the right call for a developer tool trying to build bottom-up adoption. You don't ask developers to pay before they've seen the thing work.
+
+## The Verdict
+
+Sheetful does the thing it says it does. That sounds like faint praise, but in this category it's actually meaningful — a lot of competitors in the Sheets-to-API space have shipping problems, rate limit surprises, or authentication stories that fall apart under scrutiny.
+
+The real question at 30 days is retention. Does anyone come back after the first weekend project? At 60 days: does it hold up when someone points production traffic at it, or does Google Sheets API rate limiting become the actual product? (The Google Sheets API has a limit of 300 requests per minute per project — that ceiling matters enormously and is worth asking Sheetful directly about.) At 90 days: can free-tier users convert to paid when they hit limits, or does the free experience feel complete enough that there's no pressure to upgrade?
+
+I'd want to know more about the reliability story and how Sheetful handles the inherent messiness of spreadsheets as data sources — merged cells, inconsistent column names, people who put units in the value field. Those edge cases are where this kind of tool earns or loses trust.
+
+It's not overhyped. It's also not solving a new problem. What it might be is a clean, free implementation of a useful idea at a moment when the right kind of builder is finally common enough to sustain it. That's enough to be worth watching.

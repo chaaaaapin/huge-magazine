@@ -1,0 +1,53 @@
+---
+title: "117x Faster and Free: The Android Video Compressor That Has No Business Being This Good"
+date: "2026-02-01"
+ph_rank: 7
+ph_votes: 138
+ph_comments: 15
+ph_slug: "compressor-4"
+ph_url: "https://www.producthunt.com/products/compressor-2/launches/compressor-4?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+tdc-io2+%28ID%3A+275675%29"
+product_url: "https://www.producthunt.com/r/7EQ4OPIGYMY3A4?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+tdc-io2+%28ID%3A+275675%29"
+logo: "https://ph-files.imgix.net/f9e410ec-70c4-4091-a996-be9c4d765b20.png?auto=format"
+hero_image: "https://ph-files.imgix.net/1a0e677a-f8b4-468d-9e5d-cb728081775e.png?auto=format"
+topics:
+  - "Android"
+  - "GitHub"
+  - "Video"
+tagline: "The fastest video compressor for Android."
+excerpt: "The Play Store's video compressor category is a swamp of ads and paywalls — and one open-source Kotlin project just walked in and made everyone look slow."
+edition: "2026-02-01"
+author: "danny-kowalski"
+app_type: "WebApplication"
+---
+
+## The Macro: The Play Store Has a Garbage Problem
+
+Android runs on roughly 70% of smartphones globally — a number that's held remarkably steady and is projected to climb slightly toward 71–73% through the near future, according to multiple market analysts. That's an enormous addressable surface for utility apps. And yet, if you go looking for something as straightforward as a video compressor on the Play Store, you will be greeted by a parade of apps that treat "free" as a legally protected fiction. Ad interstitials. Paywalled export settings. Subscription prompts for features that have existed in open-source libraries since approximately forever.
+
+Here's the thing: this isn't a compression technology problem. FFmpeg has been free and ferociously capable for over two decades. HandBrake — often cited as the gold standard desktop alternative — is open-source and does the job well. The compression tooling exists. What's been missing on Android specifically is a native app that actually uses it without bolting on a monetization layer that punishes you for wanting to shrink a video file.
+
+The alternatives worth naming: HandBrake (desktop, not mobile), VideoLAN, Wondershare UniConverter (which, look, is fine, but it costs money and it knows it). On mobile Android, the top Play Store results for "video compressor" are — and this is not a compliment — largely the same app wearing different icon colors. None of them are particularly fast. None of them are particularly honest about what's free.
+
+So the market context for Compressor isn't really about compression technology at all. It's about whether anyone will bother doing the obvious thing well, for free, without agenda. That's a lower bar than it sounds, and somehow it keeps not getting cleared.
+
+## The Micro: Kotlin, No Ads, and a Benchmark That Raises Eyebrows
+
+Compressor is a native Android app — written entirely in Kotlin, using Media3 transformer pipelines under the hood — that compresses video files. That's the whole pitch. It does not want your email address.
+
+The headline claim is the 117x speed figure: 11 seconds versus 21 minutes compared to the top Play Store result for "video compressor." That's a specific number, and it's the kind of specific number that either holds up or becomes the thing people remember sarcastically. The maker posted it on Product Hunt without a lot of hedging, which is either confidence or the specific overconfidence of someone who hasn't tested on a 2019 mid-range device yet. Worth flagging — the benchmark conditions aren't detailed in the available materials, so "117x faster" should be taken as a strong directional claim rather than a certified lab result.
+
+What is verifiable: the GitHub repo exists, it's public under MIT license, it has 287 stars and 11 forks at time of writing, and the code is actually there to read. That's not nothing. Open-source video utility apps with real repos and MIT licenses are a different category of trust than a random APK from a developer with three reviews and a privacy policy hosted on a Carrd site.
+
+Feature set is intentional in its restraint: presets, target size targeting, no bloat. The decision to skip subscriptions, ads, and paywalls is a product decision with real tradeoffs — Buy Me a Coffee is the listed funding mechanism, which is charmingly low-pressure and also not a business model.
+
+On Product Hunt, 138 upvotes and a #7 daily rank for a free Android utility with no marketing budget is a reasonable signal. Fifteen comments isn't explosive engagement, but utility apps don't typically generate discourse. People either install them or they don't.
+
+## The Verdict
+
+Compressor is not overhyped — it's actually underselling itself by leading with a speed benchmark that sounds like a bar bet. The more durable case for this app is simpler: it's free, open-source, native, and apparently built by someone who was annoyed enough by the Play Store alternatives to write their own. That's a legitimate origin story for a good utility.
+
+The 30-day question is whether the 117x claim survives contact with a diverse range of Android hardware. If it does, this becomes genuinely recommendable without caveats. If testers start finding that it's 117x faster specifically on whatever device the benchmark was run on, that conversation will happen loudly in the GitHub issues.
+
+The 60-to-90-day question is sustainability. MIT license, no monetization, one developer — this is a single point of failure dressed as a philosophy. The app being open-source is the actual hedge here: if the original developer loses interest, forks can survive it. That's worth more than it sounds.
+
+What I'd want to know before fully endorsing it: benchmark methodology, minimum Android version support, and whether Media3 transformer handles edge cases — portrait video, HEVC, files from third-party camera apps — without silently mangling them. If those hold up, this is the easy answer to a question people ask constantly. Right now it's very promising and slightly unverified. Which, for a free app with public source code, is already a better deal than almost anything else in its category.

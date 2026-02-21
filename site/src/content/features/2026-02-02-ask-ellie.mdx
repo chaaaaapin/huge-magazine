@@ -1,0 +1,45 @@
+---
+title: "Ellie Lives in Slack So You Don't Have to Live in Jira"
+date: "2026-02-02"
+ph_rank: 5
+ph_votes: 190
+ph_comments: 48
+ph_slug: "ask-ellie"
+ph_url: "https://www.producthunt.com/products/ask-ellie/launches/ask-ellie?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+tdc-io2+%28ID%3A+275675%29"
+product_url: "https://www.producthunt.com/r/MFTDOHY3EUOHPF?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+tdc-io2+%28ID%3A+275675%29"
+logo: "https://ph-files.imgix.net/91776696-f5ba-49cc-83b4-5373c0072656.png?auto=format"
+hero_image: "https://ph-files.imgix.net/59611249-56a8-45b0-b52e-d2fc0efd405b.png?auto=format"
+topics:
+  - "Slack"
+  - "Software Engineering"
+  - "Developer Tools"
+tagline: "Turn Slack messages into GitHub, Jira, or Linear tickets"
+excerpt: "Ask Ellie wants to be the engineering team's single source of truth — and it's betting that source of truth should live in a chat box."
+edition: "2026-02-02"
+author: "jess-tran"
+app_type: "WebApplication"
+---
+
+## The Macro: The Dashboard Is Dead, Long Live the Chatbox
+
+Here's the situation: engineering teams in 2025 are drowning in context that technically exists somewhere. GitHub has your PR status. Jira has your sprint. Linear has your cycle time. Sentry has your incident. PostHog has your funnel. None of them talk to each other in a way that helps the engineering manager who just got asked in standup why the checkout conversion dropped 12% after Thursday's deploy.
+
+This is not a new problem, but the tooling to actually solve it is newer than it looks. The Slack angle matters here — multiple sources peg Slack's 2025 revenue projection somewhere around $4.2 billion, and its parent Salesforce has been publicly positioning it as an "agentic OS" since Dreamforce 2025. The platform is clearly trying to be the layer where AI agents actually live, not just a place where you paste links to dashboards. That's a tailwind for anyone building Slack-native tooling right now.
+
+The competitive field is crowded in spirit but weirdly thin in execution. Jira and Linear both have their own AI features — Linear's in particular is reasonably good — but they're islands. They answer questions about themselves. The gap is cross-tool reasoning: what happened, across all your systems, when X shipped. That's harder, and most tools punt on it. Atlassian Intelligence exists and is fine if your entire world is Atlassian. It mostly isn't. Zapier and Make can wire things together but they're automation, not conversation. The genuine "ask a question in Slack, get an answer that synthesizes GitHub + Jira + Sentry + PostHog" space has a few players circling it, but nobody has obviously won it yet — which is either an opportunity or a sign that it's harder than it looks (probably both).
+
+## The Micro: What Ellie Actually Does When You Ask
+
+Ask Ellie, built by Aiswarya Sankar's company Entelligence.AI, is a Slack-native AI agent that connects to GitHub, Jira, Linear, Sentry, PostHog, and a few others, and lets engineering teams ask questions in plain language. The ticket-creation angle (the main Product Hunt tagline) is real but arguably undersells it — you can turn a Slack thread into a GitHub issue or a Linear ticket, yes, but the more interesting capability is the query side. Who's blocking what? Which teams have the worst cycle time? Are users affected after the last release? Ellie pulls from your actual connected data to answer those.
+
+The technical bet here is that retrieval across heterogeneous APIs — each with different data models, rate limits, and auth schemes — is solvable in a way that produces answers useful enough to actually act on. That's non-trivial. PostHog and GitHub don't really want to be in the same query. Mapping a production incident in Sentry back to the PR that caused it, and then surfacing the sprint context from Linear, requires some real plumbing underneath the natural language layer. The product page hints at this with questions like "How much AI-generated code hit production?" and "What's the ROI of our AI adoption?" — those aren't simple API calls.
+
+The PH numbers are decent without being spectacular: 190 upvotes, 48 comments, #5 for the day. That's a real launch with real engagement — not a ghost town, not a rocketship. The 48 comments is the more interesting number; that's a lot of people who had something to say, which usually means the product is touching a real nerve (or a real pain point). The comment thread would tell you more about actual user sentiment than the vote count, but what's visible externally suggests the core use case is resonating with engineering managers and team leads specifically — the people who spend the most time synthesizing context that lives across tools.
+
+## The Verdict
+
+Ask Ellie is solving a real problem with a plausible approach, and the timing is genuinely good — Slack's platform ambitions and the maturation of tool-calling in LLMs make this more viable in 2025 than it would've been in 2022. The question isn't whether the problem is real. It's whether the answers are good enough to replace the habit of just opening four tabs.
+
+At 30 days, the signal to watch is retention among teams that actually connect more than two integrations. Single-integration users will churn — they're not getting the cross-tool synthesis that's the whole point. At 60 days, answer quality under adversarial conditions matters: incomplete data, ambiguous Slack threads, repos with messy commit hygiene. That's where AI agents usually start falling apart. At 90 days, the question is whether engineering leaders are making actual decisions based on Ellie's output or just using it as a search shortcut.
+
+What we'd want to know before fully endorsing it: what happens when Ellie is confidently wrong about a production incident, and what the error surface looks like at scale. The trust bar for engineering context is high — you can't hallucinate a sprint velocity and have anyone ignore it for long. If the team has good answers to that, this is worth watching closely.
