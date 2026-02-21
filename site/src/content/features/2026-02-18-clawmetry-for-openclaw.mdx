@@ -1,0 +1,53 @@
+---
+title: "You Built AI Agents. Now You Have No Idea What They're Doing."
+date: "2026-02-18"
+ph_rank: 5
+ph_votes: 196
+ph_comments: 16
+ph_slug: "clawmetry-for-openclaw"
+ph_url: "https://www.producthunt.com/products/clawmetry?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+tdc-io2+%28ID%3A+275675%29"
+product_url: "https://www.producthunt.com/r/JKIL5I3A43NUWI?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+tdc-io2+%28ID%3A+275675%29"
+logo: "https://ph-files.imgix.net/c581354e-493f-4bf8-87b7-9029b8eeb45d.png?auto=format"
+hero_image: "https://ph-files.imgix.net/e72d5e7b-7d65-4118-8812-e338fa86ad80.png?auto=format"
+topics:
+  - "Open Source"
+  - "Developer Tools"
+  - "Artificial Intelligence"
+tagline: "Real-time observability dashboard for OpenClaw AI agents"
+excerpt: "ClawMetry is a free observability dashboard for OpenClaw agents — and the fact that it needs to exist says a lot about where AI tooling actually is right now."
+edition: "2026-02-18"
+author: "danny-kowalski"
+app_type: "WebApplication"
+---
+
+## The Macro: AI Agents Are Flying Blind and Everyone Knows It
+
+Here's the thing about the current AI agent moment: the infrastructure for actually running agents in production is about two years behind the hype for building them. Everyone's spawning sub-agents, wiring up memory, scheduling cron jobs — and then more or less squinting at log files and hoping nothing expensive is happening in the background. It's not a great situation.
+
+Observability as a category has been through this before. Traditional software had the same problem — you could build a distributed system faster than you could understand what it was doing — and that's what produced Grafana, Prometheus, Datadog, and the rest of the monitoring stack most backend engineers now take for granted. The open-source services market backing all of this is substantial: multiple research firms peg it between $35–39 billion in 2024–2025, growing at roughly 15–17% annually through the next decade, which, look, the variance in those numbers is suspicious, but the direction is not.
+
+The specific gap ClawMetry is targeting — observability for AI agent frameworks — is narrower and newer. OpenClaw has its own ecosystem of alternatives (NanoClaw, ZeroClaw, TrustClaw, per a Reddit thread from the LocalLLaMA community), which suggests the framework layer is fragmenting fast. That fragmentation is actually good news for purpose-built tooling, because none of the general-purpose observability platforms are going to care about token costs or sub-agent spawning behavior in a meaningful way anytime soon. Grafana doesn't know what a memory change event is. Datadog charges you by the metric.
+
+The window for something like ClawMetry is real. Whether this particular implementation closes it is a different question.
+
+## The Micro: One Command, Then Suddenly You Can See
+
+ClawMetry is straightforward to describe: `pip install clawmetry`, run `clawmetry`, and you get a real-time dashboard showing what your OpenClaw agents are actually doing. Token costs, sub-agent activity, cron job status, memory changes, session history — all live, all in one place. The product website shows a flow visualization interface that appears to map agent activity visually rather than just dumping it into tables. That's a real design choice, and probably the right one — agents doing things in parallel are hard to reason about in a spreadsheet view.
+
+The install story is aggressively low-friction. There's a curl-to-bash installer, a pip package, PowerShell and CMD options for Windows, and it reportedly works on Raspberry Pi. Zero config is the claim. The free onboarding offer (no upsell, per the site — they say it explicitly, which is either confidence or a tell that adoption is early) and managed instance option suggest they're thinking about the full spectrum from a solo developer running experiments to a team that doesn't want to manage infrastructure.
+
+The GitHub link is public — it's under vivekchand, who according to LinkedIn works on production AI systems at Booking.com — which means the code is auditable, which matters when you're piping an install script directly into bash. (You are reading that install command carefully, right? Right.)
+
+On Product Hunt, ClawMetry hit #5 for the day with 196 votes and 16 comments. That's a solid launch for a developer tool in a specific niche — not a viral consumer moment, but genuine traction among people who actually build with OpenClaw. The comment-to-vote ratio is low, which could mean the value proposition was clear enough that people just upvoted without needing to ask questions, or it could mean engagement was shallow. Hard to know from the outside.
+
+It's free. It's open source. The barrier to trying it is genuinely minimal.
+
+## The Verdict
+
+ClawMetry is doing something that should exist, and it's doing it with the right instincts — open source, zero friction install, cross-platform, free. Those are not small decisions. A paid-only, cloud-only, macOS-only version of this would have been easier to build and significantly worse for the ecosystem.
+
+The risk here isn't that the product is bad. The risk is that it's tied to one framework. OpenClaw has momentum right now, but the agent framework landscape is reshuffling constantly — NanoClaw and ZeroClaw exist, more will follow — and a tool that only works for one of them is one architectural pivot away from irrelevance. The 30-day question is whether usage grows fast enough to justify expanding framework support. The 60-day question is whether the managed instance offering gets any traction, because that's presumably how this eventually pays for itself. The 90-day question is whether the observability data being collected is good enough that someone builds something interesting on top of it.
+
+What I'd want to know before fully endorsing it: how deep does the token cost tracking actually go, and does the memory change monitoring work reliably across session boundaries? Those are the hard parts of agent observability, and the product website doesn't get specific.
+
+Still — if you're running OpenClaw agents and you're not using this, you're operating on vibes. That's your call.

@@ -1,0 +1,52 @@
+---
+title: "A Leaderboard for Startup Revenue Growth Sounds Simple. That's Either Its Genius or Its Problem."
+date: "2026-02-09"
+ph_rank: 2
+ph_votes: 500
+ph_comments: 35
+ph_slug: "unicorne"
+ph_url: "https://www.producthunt.com/products/unicorne?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+tdc-io2+%28ID%3A+275675%29"
+product_url: "https://www.producthunt.com/r/77R5O34BPTZII4?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+tdc-io2+%28ID%3A+275675%29"
+logo: "https://ph-files.imgix.net/c75e0d14-421d-42fd-bbae-6a0b7aff3a70.png?auto=format"
+hero_image: "https://ph-files.imgix.net/f060e0b1-7d1d-49df-b9e3-29596bd8da95.png?auto=format"
+topics:
+  - "Marketing"
+  - "SaaS"
+tagline: "The 20 fastest growing startups based on TrustMRR data"
+excerpt: "Unicorne shows you the 20 fastest-growing startups in real time, with verified revenue data — which is either the most useful dashboard you didn't know you needed, or a beautifully designed distraction."
+edition: "2026-02-09"
+author: "danny-kowalski"
+app_type: "WebApplication"
+---
+
+## The Macro: Everyone Wants Startup Intelligence, Nobody Wants to Do the Work to Get It
+
+Here's the thing about the startup intelligence market: it's bloated with noise and starving for signal. The MarTech sector is projected to grow from roughly $558 billion in 2025 to nearly $2.9 trillion by 2034, according to Precedence Research — which is a number so large it almost loses meaning. What it does tell you is that there's an enormous amount of money chasing better data about what's actually working.
+
+The problem is that most of the data is garbage. Self-reported MRR figures on Twitter. Founder announcements optimized for fundraising optics. "We crossed $X ARR" posts that omit the timeline, the churn rate, and the fact that three of those customers are the founder's cousins. The ecosystem has a chronic credibility problem, and everyone who's spent more than six months watching startups knows it.
+
+Which, look — there are tools in this space. Crunchbase and PitchBook track funding rounds, not revenue velocity. Product Hunt surfaces launches, not longevity. Y Combinator's public batch data is useful but scoped to their portfolio. What nobody has managed to do cleanly is surface revenue growth in real time, at the indie and micro-SaaS tier, with anything resembling verification. That's the gap Unicorne is pointing at. Whether they actually fill it depends on things we'll get to in a minute.
+
+The timing is at least plausible. As payment infrastructure like Stripe and RevenueCat has matured, API-level access to revenue data has become genuinely feasible in ways it wasn't five years ago. The question is whether enough startups will consent to being ranked by it.
+
+## The Micro: What It Actually Does (and the One Thing Worth Watching)
+
+Unicorne pulls verified revenue data from Stripe, Paddle, and RevenueCat via read-only API connections — no self-reported numbers, which is the only interesting sentence in the product description and also the entire product. Rankings are recalculated hourly, showing the top 20 fastest-growing startups across 7-day, 30-day, and 90-day windows. The site also compares recent performance against historical baselines, so you're not just seeing absolute revenue but acceleration — which is the right thing to measure.
+
+The data pipeline flows through TrustMRR, which appears to be the underlying infrastructure aggregating payment provider data before Unicorne surfaces it as a leaderboard. That's worth noting because it means Unicorne is partly a distribution layer on top of someone else's data layer — not necessarily a weakness, but a dependency to keep in mind.
+
+The product was built by Marc Lou (of ShipFast notoriety in the indie hacker world) using his own boilerplate, which tells you something about the build speed and the target audience. This is a product made by someone embedded in the micro-SaaS and bootstrapped founder community, for that same community. The newsletter angle — "get the fastest growing startup of the week" — suggests the real retention mechanism isn't the live dashboard, it's the email list.
+
+On Product Hunt, it landed at daily rank #2 with 500 votes and 35 comments. That's a solid launch by any reasonable measure — not a runaway #1, but comfortably in "people actually care" territory rather than "the maker's friends showed up" territory. The engagement ratio (35 comments to 500 votes) is a little low, which might mean the core audience upvoted but didn't have strong opinions, or didn't have questions. Both interpretations are interesting.
+
+The obvious question the product doesn't fully answer yet: how many startups are actually in the pool? A leaderboard of 20 drawn from 40 is very different from a leaderboard of 20 drawn from 4,000.
+
+## The Verdict
+
+Unicorne is doing one thing that genuinely matters — replacing vibes-based startup status with verified payment data — and it's doing it in a clean, watchable format. That's real. Credit where it's due.
+
+But here's the thing: the product's credibility is entirely load-bearing on the TrustMRR data pipeline, and we don't have enough visibility into how large or representative that dataset is. If the participating startup pool is small, the leaderboard stops being a signal and starts being a curated highlight reel. That's not worthless, but it's a different product.
+
+At 30 days, the question is retention — does anyone come back to check the rankings a second time, or does this function as a one-time novelty? At 60 days, it's about pool size and whether more startups are opting into the data sharing. At 90 days, if the newsletter list is growing and the rankings are genuinely shifting week over week, this has legs as a media property more than a SaaS tool.
+
+What I'd want to know before fully endorsing it: how many startups are currently in the dataset, and what does opt-in look like for them? Until then — genuinely promising, possibly underpowered. Worth a bookmark. Maybe two.

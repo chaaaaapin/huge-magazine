@@ -1,0 +1,55 @@
+---
+title: "The Tech Stack Is the Tell: PredictLeads Wants to Make Technographics Actually Useful"
+date: "2026-02-10"
+ph_rank: 8
+ph_votes: 119
+ph_comments: 11
+ph_slug: "predictleads-technographics-dataset"
+ph_url: "https://www.producthunt.com/products/predictleads-technographics-dataset?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+tdc-io2+%28ID%3A+275675%29"
+product_url: "https://www.producthunt.com/r/MQS44XFSFYX2JN?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+tdc-io2+%28ID%3A+275675%29"
+logo: "https://ph-files.imgix.net/5bd063d5-682c-4ecd-a1fd-1e80717241ac.jpeg?auto=format"
+hero_image: "https://ph-files.imgix.net/b0373a18-639e-4c70-8a6c-088c0af2ecdb.jpeg?auto=format"
+topics:
+  - "API"
+  - "Artificial Intelligence"
+  - "Data"
+tagline: "Source-backed technographics with an API and MCP server."
+excerpt: "Knowing what software a company runs is only valuable if the data is fresh, sourced, and queryable — which is exactly what most technographics providers have historically failed to deliver."
+edition: "2026-02-10"
+author: "sarah-munroe"
+app_type: "WebApplication"
+---
+
+## The Macro: Selling to Companies Based on What They Actually Run
+
+Technographics — the practice of cataloguing what technologies a business uses — has been a staple of B2B sales and marketing intelligence for over a decade. The logic is simple: if you sell a Salesforce integration, you want to find companies running Salesforce. If you're pitching a data warehouse migration, knowing your prospect is still on a legacy system is worth real money.
+
+The problem has always been data quality. The incumbents in this space — BuiltWith, HG Insights, and Similarweb's technographic layers, among others — have faced persistent criticism about stale detections, opaque methodology, and coverage gaps on smaller or less web-visible companies. BuiltWith, the granddaddy of the category, built its product largely on browser-side technology fingerprinting: scan the page, see what JavaScript loads, call it done. That works reasonably well for front-end tooling. It falls apart for anything behind a firewall, inside a job description, or visible only in DNS records.
+
+The market context here matters. B2B data as a category has gotten considerably more crowded and considerably more scrutinized. Buyers — increasingly technical themselves — want provenance. They want to know not just that a company uses Snowflake, but when that detection was first observed, when it was last confirmed, and what signal produced it. That demand for explainability has arrived roughly in parallel with AI-assisted prospecting workflows, where bad input data doesn't just produce a missed deal — it produces a confidently wrong AI agent doing something embarrassing at scale.
+
+There's also a timing argument for an API-first, MCP-compatible technographics product. As more sales and marketing tooling gets rebuilt around language model agents, the data layer needs to be programmable in ways that a CSV export or a BuiltWith Chrome extension simply isn't.
+
+## The Micro: 46,000 Technologies, Timestamped and Cited
+
+PredictLeads Technographics Dataset tracks over 46,000 technologies across what the company claims is 65 million companies. That's a big number — BuiltWith's public coverage figures are in a similar range — but the more interesting claim isn't coverage breadth, it's methodology depth.
+
+Each detection comes with a first-seen and last-seen timestamp, a confidence score, and explicit citations: which subpages triggered the detection, which DNS records, which job postings. The sample API response on their site shows exactly this structure — a `technology_detection` object with `first_seen_at`, `last_seen_at`, a numeric `score`, and nested relationships pointing to specific DNS records and subpages. That's not how most technographics data is served. Most of it arrives as a flat list with no audit trail whatsoever.
+
+The sourcing methodology spans company websites, job descriptions, DNS records, and cookies. Job description parsing is particularly interesting — a company that's been posting Databricks roles for six months is almost certainly either running Databricks or actively migrating to it, which is a qualitatively different signal than a JavaScript tag spotted on their homepage.
+
+Delivery is via REST API, flat file downloads, webhooks, and — the new addition that likely drove the Product Hunt launch timing — an MCP server. MCP (Model Context Protocol, Anthropic's open standard for connecting AI agents to external data sources) support means an agent can query company tech stacks directly without a human in the loop. That's a real workflow unlock for anyone building AI-assisted prospecting or competitive intelligence pipelines.
+
+The Product Hunt launch landed at #8 for the day with 119 votes and 11 comments. That's a competent launch — not a viral moment, but solid for a data API product whose buyers aren't typically spending their afternoons on Product Hunt. The comment section, predictably, skews toward people asking about pricing and coverage rather than philosophical enthusiasm.
+
+## The Verdict
+
+PredictLeads is making a specific and defensible bet: that the next wave of technographics buyers are developers and AI engineers who need structured, source-cited, programmatically queryable data — not marketers who want a browser plugin.
+
+The MCP server is the sharpest signal of what they're building toward. If agentic sales workflows become as common as people currently expect, the ability to drop a technographics lookup into an AI pipeline without writing a custom integration is genuinely useful. That's not a feature most competitors have shipped.
+
+What would make this work at 90 days: meaningful developer adoption, credible examples of the timestamp and confidence-score data catching something competitors missed, and a pricing model that doesn't require an enterprise procurement process to evaluate.
+
+What would make it stall: if the 65 million company figure masks thin coverage on the long tail of smaller companies where the interesting signal lives, or if the confidence scores turn out to be noisy enough that they add doubt rather than reduce it.
+
+The honest question is whether source transparency is a compelling differentiator or a nice-to-have. It should be the former — especially as AI agents act on this data autonomously. Whether buyers currently value it enough to switch is genuinely unclear. Worth watching.

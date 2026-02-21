@@ -1,0 +1,53 @@
+---
+title: "The Form Was Always in the Wrong Place"
+date: "2026-02-10"
+ph_rank: 5
+ph_votes: 190
+ph_comments: 21
+ph_slug: "video-forms"
+ph_url: "https://www.producthunt.com/products/video-forms?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+tdc-io2+%28ID%3A+275675%29"
+product_url: "https://www.producthunt.com/r/3VX4XFEBGKOWBQ?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+tdc-io2+%28ID%3A+275675%29"
+logo: "https://ph-files.imgix.net/05a22d59-f712-44a5-8deb-71777864c262.png?auto=format"
+hero_image: "https://ph-files.imgix.net/cb18c6cd-c04f-4b92-ac15-2a1d56a83f45.png?auto=format"
+topics:
+  - "User Experience"
+  - "UX Design"
+  - "Video"
+tagline: "Embed questionnaires in videos to create interactive forms"
+excerpt: "Embedding questions directly into the video timeline sounds obvious in retrospect — which is either a good sign or a warning."
+edition: "2026-02-10"
+author: "jess-tran"
+app_type: "WebApplication"
+---
+
+## The Macro: Nobody Likes Switching Tabs to Tell You Your Demo Was Confusing
+
+Here's a thing that happens constantly in product and UX research: someone records a demo, ships it alongside a Typeform or Google Form, and then wonders why response rates are abysmal and the feedback they do get is vague. The video and the form exist in separate browser tabs, separate mental contexts, separate moments in time. The friction is obvious once you notice it.
+
+The broader UX research market is growing fast — multiple analyst reports peg it somewhere between $5 billion and $14 billion today, with projections pointing significantly upward through the early 2030s (the exact numbers vary enough between sources that you should treat any specific figure as directional, not gospel). The consistent signal across those reports is strong double-digit CAGRs, which means money is flowing into tools that help teams understand what users are actually experiencing.
+
+Interactive video specifically has a few established players already. VideoAsk — Typeform's asynchronous video form product — is probably the most recognizable name in this space, though its model centers on video-as-the-question-medium rather than questions embedded in existing video content. Mindstamp and Tolstoy both do in-video interactivity with varying emphasis on lead capture versus feedback. Videobot shows up in the alternatives conversation too. The field isn't empty.
+
+What most of these tools share is a bias toward video-native flows — you're recording new content inside their platforms. The angle of taking a YouTube video you already have and layering a questionnaire onto its timeline is a slightly different frame. It's less "make a video chatbot" and more "annotate your existing video with questions where the context actually lives." That distinction matters for the use cases.
+
+## The Micro: Questions at Timestamp 0:47, Where the Confusion Actually Happened
+
+VForms (the product behind Video Forms) is straightforward to describe: you paste a YouTube URL, place questions at specific timestamps in the video timeline, and share a link or iframe embed. Viewers watch the video, hit a question when the playhead reaches that timestamp, answer it, and continue. Branching logic lets viewers skip forward based on their responses. Responses aggregate somewhere you can look at them.
+
+The product site shows a live embeddable demo, which is the right call — it's the kind of thing that makes more sense experienced than described. The embed itself is a standard iframe, which means it drops into basically any page builder or HTML template without drama. The free tier is currently unlimited, which is either a generous early-adopter move or a "we haven't figured out pricing yet" situation (possibly both).
+
+The founder quote on the site is actually the clearest product origin story you can get: they had a product video they wanted feedback on, embedded it in a Google Form, and thought — why isn't this the other way around? That's a real itch, not a market-research-derived hypothesis, and those tend to produce tighter initial products.
+
+On Product Hunt, Video Forms landed at #5 for the day with 190 upvotes and 21 comments. That's a solid indie launch — not viral, but well above the median for a solo or small-team product. Enough to suggest genuine interest from people who recognized the problem immediately.
+
+The YouTube dependency is worth noting. Right now the product is entirely downstream of YouTube's embed infrastructure. That's fast to build on and covers a huge percentage of video content, but it's a ceiling if someone wants to use Loom recordings, Vimeo, or self-hosted files. Whether that expands is probably the next major product question.
+
+## The Verdict
+
+VForms is solving a real, specific annoyance that anyone who's done video-based user research or product feedback collection has felt. The implementation is clean, the concept is immediately legible, and the free-to-start positioning removes the barrier to trying it.
+
+The 30-day question is retention and depth of use. Does anyone actually come back after the first form, or is this a "oh neat, I made one" tool? The 60-day question is whether the YouTube-only constraint starts costing them users who want to embed a Loom or a private video. The 90-day question is pricing — free forever isn't a business, and how they thread that needle will say a lot about where this goes.
+
+What would make this succeed: a genuinely sticky use case that keeps teams coming back (UX research interview supplements feel promising; onboarding flows feel like a stretch). What would make it stall: staying YouTube-only too long, or not building enough response analytics to justify switching from the video-plus-Google-Form workflow it's trying to replace.
+
+We'd want to know response completion rates compared to standalone forms before fully endorsing the core claim. But the direction is right, the problem is real, and the product is usable today. That's a better starting position than most launches at this vote count.

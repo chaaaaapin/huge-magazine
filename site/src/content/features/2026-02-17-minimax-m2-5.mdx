@@ -1,0 +1,56 @@
+---
+title: "MiniMax Wants to Make Long-Running AI Agents Economically Boring"
+date: "2026-02-17"
+ph_rank: 6
+ph_votes: 195
+ph_comments: 11
+ph_slug: "minimax-m2-5"
+ph_url: "https://www.producthunt.com/products/minimax-m2-5?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+tdc-io2+%28ID%3A+275675%29"
+product_url: "https://www.producthunt.com/r/BEFJWYFLECP7ZP?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+tdc-io2+%28ID%3A+275675%29"
+logo: "https://ph-files.imgix.net/bf564a0f-e0e5-48b5-8b5d-ca3b85b8110d.jpeg?auto=format"
+hero_image: "https://ph-files.imgix.net/f37df2c1-0d21-4504-95b8-933ae0f36b46.png?auto=format"
+topics:
+  - "Open Source"
+  - "Software Engineering"
+  - "Artificial Intelligence"
+  - "GitHub"
+tagline: "The first open model to beat Sonnet made for productivity"
+excerpt: "An open-source model from a Chinese AI lab just posted benchmark numbers that should make Anthropic at least glance up from whatever they're doing."
+edition: "2026-02-17"
+author: "jess-tran"
+app_type: "WebApplication"
+---
+
+## The Macro: Open-Source Models Are Done Being the Runner-Up
+
+For the past two years, the conventional wisdom ran something like: open-source models are great for tinkering, fine-tuning on your niche dataset, and avoiding API bills — but when you actually need to ship something that works, you reach for Claude or GPT-4. That calculus is getting messier by the month.
+
+The frontier has been compressing fast. Meta's Llama series normalized the idea that open weights could be genuinely useful. Mistral proved a smaller shop could punch above its weight. DeepSeek's R1 dropped earlier this year and made a lot of people reconsider what a lab outside the Bay Area / London corridor could do. The market underneath all of this is substantial — estimates vary wildly (the open-source services market is pegged anywhere from $18B to $39B in 2025 depending on which analyst you ask, which tells you something about how coherent the category definition is), but the directional consensus is clear: 16–17% CAGR through the next decade, minimum.
+
+What's actually interesting right now isn't the raw capability race — it's the agentic use case. Long-horizon agents that browse, code, call tools, and loop for minutes or hours are a genuinely different compute problem than a single-shot chat completion. The cost structure matters enormously. If you're running an agent that makes 200 tool calls to complete a task, the per-token price of your model isn't an accounting rounding error — it's the business model.
+
+That's the context in which MiniMax-M2.5 lands. Chinese AI lab MiniMax (whose CEO Junjie Yan reportedly delivered a keynote at WAIC 2025) has been building a broad multimodal stack — text, speech, video, music — and M2.5 is their current flagship text model push into the open-source frontier tier. The timing isn't random. The benchmark pressure from Kimi K2 and GLM-5 is real, and the agentic coding niche is crowded enough that differentiation requires actual numbers, not vibes.
+
+## The Micro: $1/Hour for an Agent That Can Actually Code
+
+M2.5's headline benchmark is SWE-Bench Verified at 80.2% — a coding evaluation that involves resolving real GitHub issues, not toy problems. For context, that reportedly edges out GLM-5's 77.8% on the same benchmark, according to third-party comparisons. The comparison to Claude Sonnet in the product tagline refers to the open vs. closed divide: M2.5 is claiming it's the first open model to cross the threshold where you'd previously have reached for Sonnet.
+
+Beyond coding, the benchmark spread is deliberately broad: BrowseComp at 76.3% (web search and navigation tasks), BFCL at 76.8% (function/tool calling), plus claims around office work tasks. The BrowseComp number is notable specifically for agentic use — if a model can't reliably navigate and extract information from the web, your agent is going to hallucinate its way into embarrassing errors at step 12 of a 20-step task.
+
+The speed and cost claims are where MiniMax is making a real argument. The product cites 37% faster on complex tasks and $1 per hour at 100 tokens per second. That 100 tps figure matters practically — it's the difference between an agent that completes a task in three minutes and one that takes eight. For anything running in a user-facing loop, that's UX, not just infrastructure.
+
+The model is available via the MiniMax API and has already shown up on SiliconFlow and NetMind, which suggests the distribution play is happening through the existing inference marketplace ecosystem rather than expecting developers to self-host. It's on OpenRouter too. That's a reasonable bet — most developers building agents aren't running their own GPU clusters.
+
+The Product Hunt launch pulled 195 upvotes and ranked #6 for the day — respectable for a model launch (these tend to skew toward builders who actually read benchmark tables, not the broader PH crowd).
+
+## The Verdict
+
+MiniMax-M2.5 is doing something more specific than 'we have a good model' — it's making an economic argument for long-horizon agentic workloads, and that argument is coherent. The benchmark numbers are verifiable, the pricing is concrete, and the distribution is already happening through platforms developers actually use.
+
+What I'd want to know at 30 days: Do the benchmark numbers translate to real task completion in messy, real-world codebases — the ones with undocumented dependencies and weird legacy patterns — or does the gap with Claude Sonnet reappear the moment you leave benchmark-shaped problems? SWE-Bench is good, but it's still a benchmark.
+
+At 60 days: Is the inference infrastructure actually holding at 100 tps under load, or is that a launch-day number that degrades when real traffic hits?
+
+At 90 days: Does MiniMax's multimodal stack (the video and audio models, the consumer apps) become a coherent platform story, or does M2.5 float as an interesting model without enough ecosystem gravity to stick?
+
+The open-source frontier model space is genuinely competitive right now, which is good for developers and probably bad for anyone trying to build a moat on capability alone. MiniMax is smart to lead with economics. Whether $1/hour is a sustainable differentiator or a temporary launch pricing strategy — that's the real question.
