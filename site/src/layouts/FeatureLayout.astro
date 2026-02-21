@@ -181,6 +181,9 @@ const jsonLd = {
   title={frontmatter.title}
   description={frontmatter.excerpt}
   image={frontmatter.hero_image ?? frontmatter.logo}
+  ogType="article"
+  publishedTime={`${frontmatter.date}T12:00:00Z`}
+  authorName={authorDisplayName}
 >
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

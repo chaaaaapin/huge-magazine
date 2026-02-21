@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hugemagazine.com/sitemap-index.xml
